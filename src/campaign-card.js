@@ -5,25 +5,37 @@ import LottieHeart from "./lottieHeart";
 import LottieShare from "./lottieShare";
 
 function CampaignCard(props) {
+
+  if (!props.campaign) {
+    return (
+      // <h2>Error: Campaign not found.</h2>
+      <bs.Spinner animation="border" role="status">
+        <span className="sr-only">Loading...</span>
+      </bs.Spinner>
+
+    )
+  }
+
   return (
-    <bs.Card>
+    <bs.Card className='mb-2'>
       {/* <bs.Card.Img variant='top' src={"/media/products/" + props.filename + "-1.png"} /> */}
       <bs.Card.Body>
         <bs.Row style={{ display: "flex", flexDirection: "row" }}>
           <bs.Card.Img
-            src={require("./testimage.png")}
+            // src={require("./testimage.png")}
+            src={props.campaign.fields.campaign_image_url}
             style={{ width: "15rem", height: "15rem", padding: "2rem" }}
           />
           <bs.Col>
             <bs.Row>
               <bs.Col md={7} style={{ padding: "1rem" }}>
                 <bs.Card.Title className='font-weight-bold' style={{ fontSize: "20pt" }}>
-                  Campaign Name
+                  {props.campaign.fields.title}
                 </bs.Card.Title>
                 <div style={{ fontSize: "14pt" }}>
-                  <p>Days: test</p>
-                  <p>Total: $test</p>
-                  <p>Goal: $test</p>
+                  <p>Days Active: {props.campaign.fields.days_active}</p>
+                  <p>Total: ${props.campaign.fields.current_amount}</p>
+                  <p>Goal: ${props.campaign.fields.goal}</p>
                 </div>
               </bs.Col>
               <bs.Col className='justify-content-end'>
@@ -34,13 +46,13 @@ function CampaignCard(props) {
                   <bs.Col style={{ position: "absolute", left: "130px", fontSize: "18px" }}>
                     {" "}
                     <br />
-                    500
+                    {props.campaign.fields.campaign_hearts}
                   </bs.Col>
                 </bs.Row>
                 <bs.Row className='align-content-center'>
                   <bs.Col style={{ position: "absolute", left: "130px", fontSize: "18px" }}>
                     <br />
-                    26
+                    {props.campaign.fields.social_share_total}
                   </bs.Col>
                   <bs.Col>
                     <LottieShare />
@@ -50,11 +62,11 @@ function CampaignCard(props) {
             </bs.Row>
             <bs.Row>
               <bs.Col style={{ fontSize: "25px", position: "absolute", bottom: "-2px" }}>
-                <p>Fraud Level:</p>
+                <p>Fraud Level: [INSERT]</p>
               </bs.Col>
               <bs.Col className='justify-content-end'>
                 <Link
-                  to={"/campaign-details/" + props.id}
+                  to={"/campaigns/" + props.campaign.fields.campaign_id}
                   className='btn btn-light absolute-center m-4 rounded-pill font-weight-bold'
                   style={{
                     backgroundColor: "#83AC25",

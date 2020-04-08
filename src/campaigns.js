@@ -1,20 +1,22 @@
 import React from "react";
 import * as bs from "react-bootstrap";
 import CampaignCard from "./campaign-card";
-import { useRouteMatch } from "react-router-dom";
 import AppContext from "./context";
-import { Formik, Form, Field } from "formik";
 
 function Campaigns(props) {
-  //const context = React.useContext(AppContext);
-  //let campaigns = Object.values(context.products); //! Change to proper api
-  //const category_match = useRouteMatch("/category/:cid"); //! Change to proper api
+  const context = React.useContext(AppContext);
+  const campaignObjects = context.campaigns
+  // console.log('campaignObjects', campaignObjects)
 
-  // if (category_match) {
-  //   campaigns = campaigns.filter(p => {
-  //     return p.category.title === category_match.params.cid;
-  //   });
-  // }
+  if (!campaignObjects) {
+    return (
+      // <h2>Error: Campaign not found.</h2>
+      <bs.Spinner animation="border" role="status">
+        <span className="sr-only">Loading...</span>
+      </bs.Spinner>
+
+    )
+  }
 
   return (
     <bs.Container>
@@ -73,22 +75,10 @@ function Campaigns(props) {
           <bs.Col>
             <bs.Row>
               <bs.Container>
-                <CampaignCard />
-                {/* <bs.Row className='justify-content-center'>
-            {campaigns.map(n => {
-              return (
-                <CampaignCard //TODO populate with model
-                  key={n.id}
-                  id={n.id}
-                  name={n.name}
-                  category={n.category}
-                  filename={n.filename}
-                  description={n.description}
-                  price={n.price}
-                />
-              );
-            })}
-          </bs.Row> */}
+                {/* <CampaignCard /> */}
+                {campaignObjects.map((campaign, campaignID) => (
+                  <CampaignCard key={campaignID} campaign={campaign}/>
+                ))}
               </bs.Container>
             </bs.Row>
             <bs.Row className='justify-content-end'>
