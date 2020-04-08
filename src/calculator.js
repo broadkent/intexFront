@@ -15,7 +15,8 @@ export default Calculator;
 
 const CalculatorController = (props) => {
   const total = 50.0; // context.getCartTotal()
-  const [score, setScore] = React.useState("This is your score");
+  const [donations_amnt, setDonationsAmnt] = React.useState('')
+  const [donators, setDonators] = React.useState('')
 
   // Days Active
   // T/F has beneficiary
@@ -27,12 +28,12 @@ const CalculatorController = (props) => {
   return (
     <Formik
       initialValues={{
-        daysActive: "14",
+        // daysActive: "90",
         beneficiary: "True",
         charity: "True",
-        hearts: "35",
-        visibleSearch: "False",
-        goal: "84602",
+        // hearts: "15",
+        visibleSearch: "True",
+        // goal: "1000",
       }}
       validateOnChange={false}
       validateOnBlur={false}
@@ -43,85 +44,153 @@ const CalculatorController = (props) => {
       }}
       onSubmit={async (values, actions) => {
         console.log("submit", values);
-        const api_headers = {
-          Authorization:
-            "Bearer zY5Oie1v2gd8x7JUU+6t+eD06SSGIu3cSGLqJykxAKnI3fmvx3oTVwT9h8T9dGYZ5mqwfu/LswXXYCt3E1QKUQ==",
-          "Content-Type": "application/json",
-        };
+
         let data = {
-          // "goal": values.goal,
-          // "days_active": values.daysActive,
-          // "has_beneficiary": values.beneficiary,
-          // "visible_in_search": values.visibleSearch,
-          // "campaign_hearts": values.hearts,
-          // "is_charity": values.charity,
+          "goal": values.goal,
+          "days_active": values.daysActive,
+          "has_beneficiary": values.beneficiary,
+          "visible_in_search": values.visibleSearch,
+          "campaign_hearts": values.hearts,
+          "is_charity": values.charity,
+          
+         
+      }
+      const api_header = {headers: {
+          "Authorization": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTg2MzgzNzk3LCJqdGkiOiI5OWIyMzFkNTg3YTQ0MGM0OTg4ZWI4MmI3MWVjNDMxYiIsInVzZXJfaWQiOjZ9.PcTCBELD3su9ZH81EoAzD1gukRxBzZTDXVEbYA0VIBc",
 
-          Inputs: {
-            input1: {
-              ColumnNames: [
-                "goal",
-                "days_active",
-                "has_beneficiary",
-                "visible_in_search",
-                "campaign_hearts",
-                "is_charity",
-              ],
-              Values: [
-                [
-                  values.goal,
-                  values.daysActive,
-                  values.beneficiary,
-                  values.visibleSearch,
-                  values.hearts,
-                  values.charity,
-                ],
-              ],
-            },
-          },
-          GlobalParameters: {},
-        };
-        // setScore(null)
-        // await new Promise(resolve => {
-        //     setTimeout(() => {  // wait 2 seconds, then set the form as "not submitting"
-        //         resolve()
-        //     }, 2000)
-        // })
-        // console.log('after the 2 seconds')
-        console.log(data);
-        console.log(api_headers);
-        await axios
-          .post("http://localhost:8000/api/prediction/", {
-            goal: values.goal,
-            days_active: values.daysActive,
-            has_beneficiary: values.beneficiary,
-            visible_in_search: values.visibleSearch,
-            campaign_hearts: values.hearts,
-            is_charity: values.charity,
-          })
-          .then(
-            (response) => {
-              console.log(response);
-              console.log(response.data);
+      }}
+      
+      console.log("data: " + data)
 
-              const score = parseFloat(response.data);
-              if (score === 0) {
-                setScore("Your campaign will raise $0");
-              } else if (score <= 1) {
-                setScore("Your campaign will raise $1-$130");
-              } else if (score <= 2) {
-                setScore("Your campaign will raise $131-$635");
-              } else if (score <= 3) {
-                setScore("Your campaign will raise $636-$3332");
-              } else if (score <= 4) {
-                setScore("Your campaign will raise over $3332");
-              }
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
+
+      await axios.post('http://localhost:8000/api/prediction/', data, api_header
+      )
+      .then((response) => {
+          console.log(response);
+          console.log(response.data)
+          
+          const score = parseFloat(response.data)
+          if(score === 0){
+              setDonationsAmnt("Your campaign will raise $0")
+          }
+          else if(score <= 1){
+              setDonationsAmnt("Your campaign will raise $1-$130")
+          }
+          else if(score <= 2){
+              setDonationsAmnt("Your campaign will raise $131-$635")
+          }
+          else if(score <= 3){
+              setDonationsAmnt("Your campaign will raise $636-$3332")
+          }
+          else if(score <= 4){
+              setDonationsAmnt("Your campaign will raise over $3332")
+          }
+      }, (error) => {
+          console.log(error);
+      });
+
+
+      //DONATORS
+
+      await axios.post('http://localhost:8000/api/predictiondonators/', data, api_header)
+      .then((response) => {
+          console.log(response);
+          console.log(response.data)
+          setDonators("from about " + parseInt(response.data) + " donators")
+      }, (error) => {
+          console.log(error)
+      });
+
+      //Pause
+      // setScore(null)
+      // await new Promise(resolve => {
+      //     setTimeout(() => {  // wait 2 seconds, then set the form as "not submitting"
+      //         resolve()
+      //     }, 2000)
+      // })
+      // console.log('after the 2 seconds')
+
+
+
+        // const api_headers = {
+        //   Authorization:
+        //     "Bearer zY5Oie1v2gd8x7JUU+6t+eD06SSGIu3cSGLqJykxAKnI3fmvx3oTVwT9h8T9dGYZ5mqwfu/LswXXYCt3E1QKUQ==",
+        //   "Content-Type": "application/json",
+        // };
+        // let data = {
+        //   // "goal": values.goal,
+        //   // "days_active": values.daysActive,
+        //   // "has_beneficiary": values.beneficiary,
+        //   // "visible_in_search": values.visibleSearch,
+        //   // "campaign_hearts": values.hearts,
+        //   // "is_charity": values.charity,
+
+        //   Inputs: {
+        //     input1: {
+        //       ColumnNames: [
+        //         "goal",
+        //         "days_active",
+        //         "has_beneficiary",
+        //         "visible_in_search",
+        //         "campaign_hearts",
+        //         "is_charity",
+        //       ],
+        //       Values: [
+        //         [
+        //           values.goal,
+        //           values.daysActive,
+        //           values.beneficiary,
+        //           values.visibleSearch,
+        //           values.hearts,
+        //           values.charity,
+        //         ],
+        //       ],
+        //     },
+        //   },
+        //   GlobalParameters: {},
+        // };
+        // // setScore(null)
+        // // await new Promise(resolve => {
+        // //     setTimeout(() => {  // wait 2 seconds, then set the form as "not submitting"
+        // //         resolve()
+        // //     }, 2000)
+        // // })
+        // // console.log('after the 2 seconds')
+        // console.log(data);
+        // console.log(api_headers);
+        // await axios
+        //   .post("http://localhost:8000/api/prediction/", {
+        //     goal: values.goal,
+        //     days_active: values.daysActive,
+        //     has_beneficiary: values.beneficiary,
+        //     visible_in_search: values.visibleSearch,
+        //     campaign_hearts: values.hearts,
+        //     is_charity: values.charity,
+        //   })
+        //   .then(
+        //     (response) => {
+        //       console.log(response);
+        //       console.log(response.data);
+
+        //       const score = parseFloat(response.data);
+        //       if (score === 0) {
+        //         setScore("Your campaign will raise $0");
+        //       } else if (score <= 1) {
+        //         setScore("Your campaign will raise $1-$130");
+        //       } else if (score <= 2) {
+        //         setScore("Your campaign will raise $131-$635");
+        //       } else if (score <= 3) {
+        //         setScore("Your campaign will raise $636-$3332");
+        //       } else if (score <= 4) {
+        //         setScore("Your campaign will raise over $3332");
+        //       }
+        //     },
+        //     (error) => {
+        //       console.log(error);
+        //     }
+        //   );
       }}>
-      {(form) => <PaymentForm form={form} total={total} score={score} />}
+      {(form) => <PaymentForm form={form} total={total} donators={donators} donations={donations_amnt} />}
     </Formik>
   );
 };
@@ -239,7 +308,7 @@ const PaymentForm = (props) => (
                 </bs.Button>
               </bs.Col>
               <bs.Col className='align-self-center font-weight-bold' style={{ fontSize: "15pt" }}>
-                {props.score}
+                {props.donations}  {props.donators}
               </bs.Col>
             </bs.Row>
             <bs.Row></bs.Row>
