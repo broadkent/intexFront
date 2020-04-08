@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;900&display=swap");
+body {
+  margin: 0;
+  font-family: "Lato", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: "Lato", sans-serif;
+}
+
+.lato {
+  font-family: "Lato", sans-serif;
+}
+
+.dropshadow-white {
+  text-shadow: 4px 4px 0px #ffffff;
+}
+
+.btn {
+  transition: all 0.17s ease-in-out;
+}
+
+.btn:hover {
+  transform: scale(1.06);
+}
