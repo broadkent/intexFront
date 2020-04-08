@@ -5,12 +5,12 @@ export default function TopContainer() {
     return (
         <Navbar style={{ backgroundColor: '#fff' }}>
             <Navbar.Brand href="/" className="mr-35vw">
-            <img src="./images/Logo_SANSBG.png" alt='logo' style={{ width: '100px' }} />
+            <img src="/images/Logo_SANSBG.png" alt='logo' style={{ width: '100px' }} />
             </Navbar.Brand>
             <Nav className="justify-content-center">
-                <Nav.Link href="#home">CAMPAIGNS</Nav.Link>
+                <Nav.Link href="/campaigns">CAMPAIGNS</Nav.Link>
                 <Nav.Link href="/calculator">PREDICTION CALCULATOR</Nav.Link>
-                <Nav.Link href="#pricing">TRAINING</Nav.Link>
+                <Nav.Link href="/training">TRAINING</Nav.Link>
             </Nav>
         </Navbar>
     )
