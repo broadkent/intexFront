@@ -10,6 +10,7 @@ import Calculator from "./calculator";
 import CampaignDetail from "./campaign-detail";
 import Campaigns from "./campaigns";
 import Training from "./training";
+import Login from './login'
 
 function App() {
   return (
@@ -34,6 +35,9 @@ function App() {
               </Route>
               <Route path='/training'>
                 <Training />
+              </Route>
+              <Route path='/login'>
+                <Login />
               </Route>
               <Route path='/'>
                 <Home />
