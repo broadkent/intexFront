@@ -144,7 +144,7 @@ const PaymentForm = (props) => (
       prediction calculator
     </bs.Row>
     <bs.Row className='justify-content-center'>
-      <bs.Card style={{ width: "50rem" }}>
+      <bs.Card style={{ width: "50rem", padding: "2rem" }}>
         <bs.Card.Body>
           <Form>
             <bs.Row>
@@ -164,21 +164,49 @@ const PaymentForm = (props) => (
                 /> */}
               </bs.Col>
               <bs.Col>
-                <label htmlFor='charity'>Campaign creator is a charity</label>
-                <Field as='select' name='charity'>
+                <br />
+                <label htmlFor='charity' style={{ fontSize: "14pt" }}>
+                  Creator is a charity:
+                </label>
+
+                <Field
+                  as='select'
+                  name='charity'
+                  style={{ height: "35px", position: "absolute", right: "30px" }}>
                   <option value='true'>True</option>
                   <option value='false'>False</option>
                 </Field>
-                <label htmlFor='beneficiary'>Campaign has declared beneficiary</label>
-                <Field as='select' name='beneficiary'>
+
+                <br />
+                <br />
+                <br />
+                <label htmlFor='beneficiary' style={{ fontSize: "14pt" }}>
+                  Has declared beneficiary:
+                </label>
+
+                <Field
+                  as='select'
+                  name='beneficiary'
+                  style={{ height: "35px", position: "absolute", right: "30px" }}>
                   <option value='true'>True</option>
                   <option value='false'>False</option>
                 </Field>
-                <label htmlFor='visibleSearch'>Campaign is visible in search results</label>
-                <Field as='select' name='visibleSearch'>
+
+                <br />
+                <br />
+                <br />
+                <label htmlFor='visibleSearch' style={{ fontSize: "14pt" }}>
+                  Visible in search results:
+                </label>
+
+                <Field
+                  as='select'
+                  name='visibleSearch'
+                  style={{ height: "35px", position: "absolute", right: "30px" }}>
                   <option value='true'>True</option>
                   <option value='false'>False</option>
                 </Field>
+
                 {/* <Input
                   title='Campaign is visible in search results (true/false):'
                   name='visibleSearch'
@@ -210,7 +238,9 @@ const PaymentForm = (props) => (
                   Submit
                 </bs.Button>
               </bs.Col>
-              <bs.Col className='align-self-center'>{props.score}</bs.Col>
+              <bs.Col className='align-self-center font-weight-bold' style={{ fontSize: "15pt" }}>
+                {props.score}
+              </bs.Col>
             </bs.Row>
             <bs.Row></bs.Row>
             {/* form inputs */}
