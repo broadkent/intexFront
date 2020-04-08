@@ -10,7 +10,7 @@ import Calculator from "./calculator";
 import CampaignDetail from "./campaign-detail";
 import Campaigns from "./campaigns";
 import Training from "./training";
-import Login from './login'
+import Login from "./login";
 
 function App() {
   return (
