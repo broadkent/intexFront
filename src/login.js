@@ -50,60 +50,57 @@ export default function Home() {
 }
 
 const PaymentForm = (props) => (
-  <Form>
-    <bs.Container fluid className='p-4'>
-      <bs.Row>
-        <bs.Col>
-          <center>
-            <h1>Login</h1>
+  <bs.Container>
+    <bs.Row
+      className='justify-content-center lato font-weight-bolder dropshadow-white'
+      style={{ display: "flex", padding: "2rem", color: "#83AC25", fontSize: "50pt" }}>
+      login
+    </bs.Row>
+    <bs.Row className='justify-content-center'>
+      <bs.Card style={{ padding: "3rem" }}>
+        <p style={{ color: "#83AC25" }} className='font-weight-bold'>
+          Credentials are given by admins of the gofundme website.{" "}
+        </p>
+        <p style={{ color: "#83AC25" }} className='font-weight-bold'>
+          Only on special basis may others have credentials.
+        </p>
+        <Form>
+          <bs.Row>
+            <bs.Col>
+              <bs.Card.Body>
+                <Input title='Username' name='username' type='text' />
+                <Input title='Password:' name='password' type='text' />
+              </bs.Card.Body>
+            </bs.Col>
+          </bs.Row>
+          <bs.Row className='justify-content-center'>
+            <bs.Button
+              block
+              className='m-4 rounded-pill font-weight-bold'
+              type='submit'
+              style={{
+                backgroundColor: "#FFFFFF	",
+                borderColor: "#83AC25",
+                borderWidth: "4pt",
+                width: "10rem",
+                height: "3rem",
+                color: "#83AC25",
+                boxShadow: "3px 3px 0px #999999",
+              }}
+              size='md'
+              disabled={props.form.isSubmitting}>
+              {props.form.isSubmitting && (
+                <bs.Spinner className='mr-2' size='sm' animation='border' />
+              )}
+              Submit
+            </bs.Button>
+          </bs.Row>
 
-            <p>
-              Credentials are given by admins of the gofundme website. Only on special basis may
-              others have credentials.
-            </p>
-          </center>
-        </bs.Col>
-      </bs.Row>
-      <bs.Row>
-        <bs.Col md='2'></bs.Col>
-        <bs.Col md='8'>
-          <bs.Card>
-            <bs.Card.Body>
-              <Input title='Username' name='username' type='text' />
-              <Input title='Password:' name='password' type='text' />
-            </bs.Card.Body>
-          </bs.Card>
-        </bs.Col>
-        <bs.Col md='2'></bs.Col>
-      </bs.Row>
-      <bs.Row className='justify-content-center'>
-        <bs.Col md='6'>
-          <bs.Button
-            block
-            className='m-4 rounded-pill font-weight-bold'
-            type='submit'
-            style={{
-              backgroundColor: "#FFFFFF	",
-              borderColor: "#83AC25",
-              borderWidth: "4pt",
-              width: "10rem",
-              height: "3rem",
-              color: "#83AC25",
-              boxShadow: "3px 3px 0px #999999",
-            }}
-            size='md'
-            disabled={props.form.isSubmitting}>
-            {props.form.isSubmitting && (
-              <bs.Spinner className='mr-2' size='sm' animation='border' />
-            )}
-            Submit
-          </bs.Button>
-        </bs.Col>
-      </bs.Row>
-
-      {/* form inputs */}
-    </bs.Container>
-  </Form>
+          {/* form inputs */}
+        </Form>
+      </bs.Card>
+    </bs.Row>
+  </bs.Container>
 );
 const Input = (props) => (
   <Field name={props.name}>
