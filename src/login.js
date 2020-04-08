@@ -91,10 +91,11 @@ const PaymentForm = (props) => (
               Submit
             </bs.Button>
           </bs.Row>
-          <p style={{ color: "#83AC25" }} className='font-weight-bold'>
-            Credentials are given by admins of the gofundme website.{" "}
+          <br />
+          <p style={{ color: "#83AC25", fontSize: "10pt" }} className='font-weight-bold'>
+            Credentials are given by admins of the gofundme website.
           </p>
-          <p style={{ color: "#83AC25" }} className='font-weight-bold'>
+          <p style={{ color: "#83AC25", fontSize: "10pt" }} className='font-weight-bold'>
             Only on special basis may others have credentials.
           </p>
 
