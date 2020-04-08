@@ -165,7 +165,7 @@ const PaymentForm = (props) => (
               </bs.Col>
               <bs.Col>
                 <br />
-                <label htmlFor='charity' style={{ fontSize: "14pt" }}>
+                <label htmlFor='charity' style={{ fontSize: "15pt" }}>
                   Creator is a charity:
                 </label>
 
@@ -180,7 +180,7 @@ const PaymentForm = (props) => (
                 <br />
                 <br />
                 <br />
-                <label htmlFor='beneficiary' style={{ fontSize: "14pt" }}>
+                <label htmlFor='beneficiary' style={{ fontSize: "15pt" }}>
                   Has declared beneficiary:
                 </label>
 
@@ -195,7 +195,7 @@ const PaymentForm = (props) => (
                 <br />
                 <br />
                 <br />
-                <label htmlFor='visibleSearch' style={{ fontSize: "14pt" }}>
+                <label htmlFor='visibleSearch' style={{ fontSize: "15pt" }}>
                   Visible in search results:
                 </label>
 
