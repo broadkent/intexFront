@@ -1,19 +1,17 @@
 import React from "react";
 import * as bs from "react-bootstrap";
-import { Link } from "react-router-dom";
 import LottieHeart from "./lottieHeart";
 import LottieShare from "./lottieShare";
 import { Nav } from "react-bootstrap";
 function CampaignCard(props) {
-
   if (!props.campaign) {
     return (
       // <h2>Error: Campaign not found.</h2>
-      <bs.Spinner animation="border" role="status">
-        <span className="sr-only">Loading...</span>
-      </bs.Spinner>
 
-    )
+      <bs.Spinner animation='border' role='status'>
+        <span className='sr-only'>Loading...</span>
+      </bs.Spinner>
+    );
   }
 
   return (
@@ -36,6 +34,7 @@ function CampaignCard(props) {
                   <p>Days Active: {props.campaign.days_active}</p>
                   <p>Total: ${props.campaign.current_amount}</p>
                   <p>Goal: ${props.campaign.goal}</p>
+                  <p>Fraud Level: {props.campaign.riskScoreQuartile}</p>
                 </div>
               </bs.Col>
               <bs.Col className='justify-content-end'>
@@ -61,9 +60,6 @@ function CampaignCard(props) {
               </bs.Col>
             </bs.Row>
             <bs.Row>
-              <bs.Col style={{ fontSize: "25px", position: "absolute", bottom: "-2px" }}>
-                <p>Fraud Level: [INSERT]</p>
-              </bs.Col>
               <bs.Col className='justify-content-end'>
                 <Nav.Link
                   href={"/campaigns/" + props.campaign.campaign_id}
@@ -78,11 +74,11 @@ function CampaignCard(props) {
                     color: "#FFFFFF",
                     boxShadow: "3px 3px 0px #999999",
                     position: "absolute",
-                    right: "10px",
-                    bottom: "-50px",
+                    right: "12px",
+                    bottom: "-12px",
                   }}
                   size='lg'>
-                  DETAILS
+                  Details
                 </Nav.Link>
               </bs.Col>
             </bs.Row>

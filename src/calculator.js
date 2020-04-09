@@ -45,7 +45,6 @@ const CalculatorController = (props) => {
         return errors;
       }}
       onSubmit={async (values, actions) => {
-
         let data = {
           goal: values.goal,
           days_active: values.daysActive,
@@ -54,6 +53,7 @@ const CalculatorController = (props) => {
           campaign_hearts: values.hearts,
           is_charity: values.charity,
         };
+<<<<<<< HEAD
         const api_header = {
           headers: {
             Authorization:
@@ -63,11 +63,12 @@ const CalculatorController = (props) => {
 
         console.log("data: " + data);
         
+=======
+>>>>>>> c2d11ceffe49e816691f704bef1f3c518c461441
 
-        const token = "JWT " + localStorage.getItem("accessToken");
+        // const token = "JWT " + localStorage.getItem("accessToken");
         await axios.post("http://localhost:8000/api/prediction/", data).then(
           (response) => {
-
             const score = parseFloat(response.data);
             if (score === 0) {
               setDonationsAmnt("less than $15");
@@ -333,6 +334,23 @@ const PaymentForm = (props) => (
           </Form>
         </bs.Card.Body>
       </bs.Card>
+    </bs.Row>
+    <bs.Row className='justify-content-center' style={{ paddingTop: "2rem" }}>
+      <bs.Nav.Link
+        style={{
+          backgroundColor: "#83AC25	",
+          borderColor: "#FFFFFF",
+          borderWidth: "4pt",
+          width: "15rem",
+          height: "3rem",
+          color: "#FFFFFF",
+          boxShadow: "3px 3px 0px #999999",
+        }}
+        href={"/"}
+        className='btn m-4 rounded-pill font-weight-bold'>
+        <i className='fas fa-arrow-left p-1'></i>
+        Back to Home
+      </bs.Nav.Link>
     </bs.Row>
   </bs.Container>
 );

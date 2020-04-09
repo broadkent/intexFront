@@ -13,9 +13,6 @@ export default class LottieControl extends React.Component {
       loop: false,
       autoplay: true,
       animationData: animationData.default,
-      rendererSettings: {
-        preserveAspectRatio: "xMidYmid slice",
-      },
     };
     return (
       <Container>
