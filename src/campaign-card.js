@@ -78,7 +78,7 @@ function CampaignCard(props) {
                     bottom: "-12px",
                   }}
                   size='lg'>
-                  DETAILS
+                  Details
                 </Nav.Link>
               </bs.Col>
             </bs.Row>
