@@ -1,6 +1,5 @@
 import React from "react";
 import * as bs from "react-bootstrap";
-import { Link } from "react-router-dom";
 import LottieHeart from "./lottieHeart";
 import LottieShare from "./lottieShare";
 import { Nav } from "react-bootstrap";

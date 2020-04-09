@@ -1,12 +1,12 @@
-import React, { useState, useEffect  } from 'react'
-import { Container, Table, Row, Col, Button, Spinner, Nav } from "react-bootstrap";
-import { useParams, useHistory } from "react-router-dom";
-import AppContext from "./context";
+import React, { useEffect  } from 'react'
+import { Container, Table, Row, Col, Spinner, Nav } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+// import AppContext from "./context";
 import axios from 'axios'
 
 export default function CampaignDetail() {
-  const context = React.useContext(AppContext);
-  const history = useHistory();
+  // const context = React.useContext(AppContext);
+  // const history = useHistory();
 
   let { campaignID } = useParams();
   let [campaignObjects,setcampaigns] = React.useState({})
@@ -21,13 +21,34 @@ export default function CampaignDetail() {
     }
 
     setcampaigns(prods)  
-  },[])
+  },[campaignID])
+
+  // useEffect(() => {
+  //   async function hello() {
+  //     var token = "JWT " + localStorage.getItem("accessToken");
+  //     const resp = await axios.get("http://127.0.0.1:8000/api/searchcampaigns/" + campaignID,{ headers: {
+  //     Authorization: token,
+  //   }})
+  //   const prods = {}
+  //   for ( const c of resp.data){
+  //       prods[c.pk] =c.fields
+  //   }
+  //   setcampaigns(prods)  
+  // }},[])
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     // You can await here
+  //     const response = await MyAPI.getData(someId);
+  //     // ...
+  //   }
+  //   fetchData();
+  // }, [someId]); // Or [] if effect doesn't need props or state
   
 
   let campaignObject=campaignObjects
-  if (Object.keys(campaignObject).length ==0) {
+  if (Object.keys(campaignObject).length === 0) {
     return (
-      // <h2>Error: Campaign not found.</h2>
       <Spinner animation='border' role='status'>
         <span className='sr-only'>Loading...</span>
       </Spinner>
@@ -38,6 +59,9 @@ export default function CampaignDetail() {
   Object.values(campaignObjects).map((c)=>{
     campaign=c
   });
+  // for(let c of campaignObject) {
+  //   campaign = c
+  // }
 
 
   return (
@@ -56,9 +80,6 @@ export default function CampaignDetail() {
           </Nav.Link>
         </Col>
       </Row>
-
-      {/* Uncomment when axios is connected */}
-
       <Row className='pb-2'>
         <Col md='3'></Col>
         <Col md='6'>
