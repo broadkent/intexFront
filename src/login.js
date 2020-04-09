@@ -94,17 +94,31 @@ const PaymentForm = (props) => (
               Submit
             </bs.Button>
           </bs.Row>
-          <br />
-          <p style={{ color: "#83AC25", fontSize: "10pt" }} className='font-weight-bold'>
-            Credentials are given by admins of the gofundme website.
-          </p>
-          <p style={{ color: "#83AC25", fontSize: "10pt" }} className='font-weight-bold'>
-            Only on special basis may others have credentials.
-          </p>
+
+          {/* <p style={{ color: "#83AC25", fontSize: "10pt" }} className='font-weight-bold'>
+            <center>Credentials granted by gofundme admin.</center>
+          </p> */}
 
           {/* form inputs */}
         </Form>
       </bs.Card>
+    </bs.Row>
+    <bs.Row className='justify-content-center' style={{ paddingTop: "1rem" }}>
+      <bs.Nav.Link
+        style={{
+          backgroundColor: "#83AC25	",
+          borderColor: "#FFFFFF",
+          borderWidth: "4pt",
+          width: "15rem",
+          height: "3rem",
+          color: "#FFFFFF",
+          boxShadow: "3px 3px 0px #999999",
+        }}
+        href={"/"}
+        className='btn m-4 rounded-pill font-weight-bold'>
+        <i className='fas fa-arrow-left p-1'></i>
+        Back to Home
+      </bs.Nav.Link>
     </bs.Row>
   </bs.Container>
 );
