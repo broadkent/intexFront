@@ -1,21 +1,32 @@
-import React from "react";
+import React, { useState, useEffect  } from 'react'
 import * as bs from "react-bootstrap";
 import CampaignCard from "./campaign-card";
 import AppContext from "./context";
 import Search from "./search";
-function Campaigns(props) {
-  const context = React.useContext(AppContext);
-  const campaignObjects = context.campaigns;
-  // console.log('campaignObjects', campaignObjects)
+import Axios from 'axios'
 
-  if (!campaignObjects) {
+function Campaigns(props) {
+  
+  let [campaignObjects,setcampaigns] = React.useState({})
+  useEffect(async()=>{
+    var token = "JWT " + localStorage.getItem("accessToken");
+    const resp = await Axios.get('http://127.0.0.1:8000/api/campaign/'+0,{ headers: {
+      Authorization: token,
+    }})
+    const prods = {}
+    for ( const c of resp.data){
+        prods[c.pk] =c.fields
+    }
+    setcampaigns(prods)  
+  },[])
+  if (Object.keys(campaignObjects).length ==0) {
     return (
       // <h2>Error: Campaign not found.</h2>
       <bs.Spinner animation='border' role='status'>
         <span className='sr-only'>Loading...</span>
       </bs.Spinner>
     );
-  }
+  } else {
 
   return (
     <bs.Container>
@@ -36,9 +47,9 @@ function Campaigns(props) {
             <bs.Row>
               <bs.Container>
                 {/* <CampaignCard /> */}
-                {campaignObjects.map((campaign, campaignID) => (
-                  <CampaignCard key={campaignID} campaign={campaign} />
-                ))}
+                {Object.values(campaignObjects).map((campaign, campaignID) =>{ 
+                  return (<CampaignCard key={campaignID} campaign={campaign} />)
+                })} 
               </bs.Container>
             </bs.Row>
             <bs.Row className='justify-content-end'>
@@ -63,5 +74,6 @@ function Campaigns(props) {
       </bs.Row>
     </bs.Container>
   );
+  }
 }
 export default Campaigns;

@@ -17,14 +17,11 @@ export default function Home() {
         validateOnBlur={false}
         validate={(values) => {
           const errors = {};
-          console.log("validating", values);
           return errors;
         }}
         onSubmit={async (values, actions) => {
-          console.log("insubmit");
           try {
             if (values.searchBy === "title") {
-              console.log("title search");
               var token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
                 "http://127.0.0.1:8000/api/searchwordcampaigns/" + values.searchBox + "/" + 0,
@@ -34,10 +31,8 @@ export default function Home() {
                   },
                 }
               );
-              console.log("response", response.data);
             }
             if (values.searchBy === "description") {
-              console.log("description search");
               var token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
                 "http://127.0.0.1:8000/api/SearchCampaignDesc/" + values.searchBox + "/" + 0,
@@ -47,10 +42,8 @@ export default function Home() {
                   },
                 }
               );
-              console.log("response", response.data);
             }
             if (values.searchBy === "campaignId") {
-              console.log("id search");
               var token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
                 "http://127.0.0.1:8000/api/searchcampaigns/" + values.searchBox,
@@ -60,7 +53,6 @@ export default function Home() {
                   },
                 }
               );
-              console.log("response", response.data);
             }
             if (
               values.searchBy === "risk" &&
@@ -68,7 +60,6 @@ export default function Home() {
               parseInt(values.searchBox) < 5
             ) {
               //!check the risk level
-              console.log("risk search");
               let riskNum = parseInt(values.searchBox);
               var token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
@@ -79,7 +70,6 @@ export default function Home() {
                   },
                 }
               );
-              console.log("response", response.data);
             }
           } catch (err) {
             actions.setFieldError("title", err);

@@ -1,17 +1,31 @@
-import React from "react";
+import React, { useState, useEffect  } from 'react'
 import { Container, Table, Row, Col, Button, Spinner } from "react-bootstrap";
 import { useParams, useHistory } from "react-router-dom";
 import AppContext from "./context";
+import axios from 'axios'
 
 export default function CampaignDetail() {
   const context = React.useContext(AppContext);
   const history = useHistory();
 
   let { campaignID } = useParams();
-  console.log(campaignID);
-  let campaignObject = context.campaigns.find((p) => p.fields.campaign_id === parseInt(campaignID));
+  let [campaignObjects,setcampaigns] = React.useState({})
+  useEffect(async()=>{
+    var token = "JWT " + localStorage.getItem("accessToken");
+    const resp = await axios.get("http://127.0.0.1:8000/api/searchcampaigns/" + campaignID,{ headers: {
+      Authorization: token,
+    }})
+    const prods = {}
+    for ( const c of resp.data){
+        prods[c.pk] =c.fields
+    }
 
-  if (!campaignObject) {
+    setcampaigns(prods)  
+  },[])
+  
+
+  let campaignObject=campaignObjects
+  if (Object.keys(campaignObject).length ==0) {
     return (
       // <h2>Error: Campaign not found.</h2>
       <Spinner animation='border' role='status'>
@@ -19,10 +33,12 @@ export default function CampaignDetail() {
       </Spinner>
     );
   }
+  else {
+  let campaign=undefined
+  Object.values(campaignObjects).map((c)=>{
+    campaign=c
+  });
 
-  const campaign = campaignObject.fields;
-  console.log(campaign);
-  console.log(campaign.title);
 
   return (
     <Container fluid className='p-4'>
@@ -154,4 +170,5 @@ export default function CampaignDetail() {
       </Row>
     </Container>
   );
+  }
 }

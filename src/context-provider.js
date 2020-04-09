@@ -25,7 +25,6 @@ export default class AppProvider extends React.Component {
 
     async componentDidMount() {
         const resp = await axios.get('http://localhost:8000/api/campaign/')
-        console.log(resp.data)
 
         this.setState({
             campaigns: resp.data,

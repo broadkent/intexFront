@@ -26,7 +26,6 @@ export default function Home() {
           if (values.password === "") {
             errors.password = "You need a value for your password.";
           }
-          console.log("validating", values);
           return errors;
         }}
         onSubmit={async (values, actions) => {
@@ -35,7 +34,6 @@ export default function Home() {
               username: values.username,
               password: values.password,
             });
-            console.log("submit", response.data);
             localStorage.setItem("accessToken", response.data.access);
             localStorage.setItem("refreshToken", response.data.refresh);
             history.push("/campaigns");
