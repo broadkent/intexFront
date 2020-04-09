@@ -203,6 +203,24 @@ function Campaigns(props) {
                 MORE 
               </bs.Button> */}
             </bs.Row>
+            <bs.Row>
+              <bs.Button
+                  onClick={() => PageBack()}
+                  block
+                  className='m-4 rounded-pill font-weight-bold'
+                  style={{
+                    backgroundColor: "#FFFFFF	",
+                    borderColor: "#83AC25",
+                    borderWidth: "4pt",
+                    width: "10rem",
+                    height: "3rem",
+                    color: "#83AC25",
+                    boxShadow: "3px 3px 0px #999999",
+                  }}
+                  size='md'>
+                  Back
+                </bs.Button>
+            </bs.Row>
           </bs.Col>
         </bs.Col>
       </bs.Row>
