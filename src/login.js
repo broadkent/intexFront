@@ -3,13 +3,13 @@ import { Container } from "react-bootstrap";
 import * as bs from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import axios from "axios";
-//import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import LottieLock from "./lottieLock";
 
 export default function Home() {
   
-  //let history = useHistory();
+  let history = useHistory();
   return (
     <Container>
       <Formik
@@ -38,8 +38,8 @@ export default function Home() {
             });
             console.log("submit", response.data);
             localStorage.setItem("accessToken", response.data.access);
-            //localStorage.setItem("refreshToken", response.data.refresh);
-            //history.push('/campaigns')
+            localStorage.setItem("refreshToken", response.data.refresh);
+            history.push('/campaigns')
           } catch (err) {
             const err1 = err.toString();
             if (err1.search("401")) {
