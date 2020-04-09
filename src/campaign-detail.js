@@ -39,7 +39,7 @@ export default function CampaignDetail() {
   } else {
     let campaign = undefined;
     Object.values(campaignObjects).map((c) => {
-      campaign = c;
+      return campaign = c;
     });
 
 
