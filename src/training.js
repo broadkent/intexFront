@@ -14,7 +14,7 @@ function Training(props) {
         noGutters
         className='flex-grow-0 flex-shrink-0'>
         <bs.Col className='d-flex justify-content-center'>
-          <bs.Card style={{ padding: "2rem" }} className='mb-4' border='light'>
+          <bs.Card style={{ padding: "2rem" }} className='mb-4'>
             <iframe
               title='training video'
               width='1024'
