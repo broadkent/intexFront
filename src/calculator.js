@@ -1,6 +1,6 @@
 import React from "react";
 import * as bs from "react-bootstrap";
-import { Formik, Form, Field, Label } from "formik";
+import { Formik, Form, Field } from "formik";
 import axios from "axios";
 import LottiePerson from "./lottiePerson";
 import LottieDollar from "./lottieDollar";

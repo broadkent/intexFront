@@ -1,19 +1,17 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
 import * as bs from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import axios from "axios";
 
 export default function Home() {
   return (
-    <Container>
+    <bs.Container>
       <Formik
         initialValues={{
           title: "",
           description: "",
-          campaignId:-1,
-          risk:0
-
+          campaignId: -1,
+          risk: 0,
         }}
         validateOnChange={false}
         validateOnBlur={false}
@@ -23,72 +21,95 @@ export default function Home() {
           return errors;
         }}
         onSubmit={async (values, actions) => {
-            console.log('insubmit')
+          console.log("insubmit");
           try {
-            if(values.title != ''){
-                console.log('white')
-                var token="JWT "+ localStorage.getItem('accessToken');
-                const response = await axios.get('http://127.0.0.1:8000/api/searchwordcampaigns/'+values.title+'/'+0,{
+            if (values.searchBy == "title") {
+              console.log("white");
+              var token = "JWT " + localStorage.getItem("accessToken");
+              const response = await axios.get(
+                "http://127.0.0.1:8000/api/searchwordcampaigns/" + values.searchBox + "/" + 0,
+                {
                   headers: {
-                      "Authorization": token,
-                  }})
-                console.log('response',response.data)
+                    Authorization: token,
+                  },
+                }
+              );
+              console.log("response", response.data);
             }
-            if(values.description !=''){
-                console.log('whites')
-                var token="JWT "+ localStorage.getItem('accessToken');
-                const response = await axios.get('http://127.0.0.1:8000/api/SearchCampaignDesc/'+values.description+'/'+0,{
-                headers: {
-                    "Authorization": token,
-                }})
-                console.log('response',response.data)
-            }
-            if(values.campaignId >-1){
-                console.log('white')
-                var token="JWT "+ localStorage.getItem('accessToken');
-                const response = await axios.get('http://127.0.0.1:8000/api/searchcampaigns/'+values.campaignId,{
+            if (values.searchBy == "description") {
+              console.log("whites");
+              var token = "JWT " + localStorage.getItem("accessToken");
+              const response = await axios.get(
+                "http://127.0.0.1:8000/api/SearchCampaignDesc/" + values.searchBox + "/" + 0,
+                {
                   headers: {
-                      "Authorization": token,
-                  }})
-                  console.log('response',response.data)
+                    Authorization: token,
+                  },
+                }
+              );
+              console.log("response", response.data);
             }
-            if(values.risk>0 && values.risk<5){
-              console.log('white')
-              var token="JWT "+ localStorage.getItem('accessToken');
-              const response = await axios.get('http://127.0.0.1:8000/api/sortRisk/'+values.risk+'/'+0,{
-                headers: {
-                    "Authorization": token,
-                }})
-                console.log('response',response.data)
+            if (values.searchBy == "campaignId") {
+              console.log("white");
+              var token = "JWT " + localStorage.getItem("accessToken");
+              const response = await axios.get(
+                "http://127.0.0.1:8000/api/searchcampaigns/" + values.searchBox,
+                {
+                  headers: {
+                    Authorization: token,
+                  },
+                }
+              );
+              console.log("response", response.data);
             }
-            
-          
+            if (
+              values.searchBy == "risk" &&
+              parseInt(values.searchBox) > 0 &&
+              parseInt(values.searchBox) < 5
+            ) {
+              //!check the risk level
+              console.log("white");
+              let riskNum = parseInt(values.searchBox);
+              var token = "JWT " + localStorage.getItem("accessToken");
+              const response = await axios.get(
+                "http://127.0.0.1:8000/api/sortRisk/" + riskNum + "/" + 0,
+                {
+                  headers: {
+                    Authorization: token,
+                  },
+                }
+              );
+              console.log("response", response.data);
+            }
           } catch (err) {
             actions.setFieldError("title", err);
           }
         }}>
         {(form) => <PaymentForm form={form} />}
       </Formik>
-    </Container>
+    </bs.Container>
   );
 }
 
 const PaymentForm = (props) => (
   <bs.Container>
     <bs.Row className='justify-content-center'>
-      <bs.Card style={{ padding: "3rem" }}>
+      <bs.Card style={{ padding: "3rem", height: "19rem" }}>
         <Form>
-          <bs.Row>
-            <bs.Col>
-              <bs.Card.Body>
-                <Input title='title' name='title' type='text' />
-                <Input title='description' name='description' type='text' />
-                <Input title='campaignId' name='campaignId' type='text' />
-                <Input title='risk' name='risk' type='text' />
-              </bs.Card.Body>
-            </bs.Col>
-          </bs.Row>
           <bs.Row className='justify-content-center'>
+            {/* <Input title='title' name='title' type='text' />
+            <Input title='description' name='description' type='text' />
+            <Input title='campaignId' name='campaignId' type='text' />
+            <Input title='risk' name='risk' type='text' /> */}
+            <Input title='Search:' name='searchBox' type='text' />
+            <Field title='Search By:' as='select' name='searchBy' style={{ width: "12rem" }}>
+              <option value='title'>Title</option>
+              <option value='description'>Description</option>
+              <option value='campaignId'>Campaign ID</option>
+              <option value='risk'>Fraud Risk Level</option>
+            </Field>
+          </bs.Row>
+          <bs.Row className='justify-content-center' style={{ paddingTop: "2rem" }}>
             <bs.Button
               block
               className='m-4 rounded-pill font-weight-bold'
