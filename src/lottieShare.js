@@ -13,9 +13,6 @@ export default class LottieShare extends React.Component {
       loop: false,
       autoplay: true,
       animationData: shareData.default,
-      rendererSettings: {
-        preserveAspectRatio: "xMidYmid slice",
-      },
     };
     return (
       <Container>

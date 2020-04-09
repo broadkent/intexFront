@@ -14,9 +14,6 @@ export default class LottieDollar extends React.Component {
       autoplay: true,
       animationData: animationData.default,
       speed: 0.5,
-      rendererSettings: {
-        preserveAspectRatio: "xMidYmid slice",
-      },
     };
     return (
       <Container>
