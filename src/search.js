@@ -70,7 +70,7 @@ export default function Home() {
                 }
               );
               if (response.data.length == 0) {
-                console.log("no data here!")
+                console.log("no data here!");
                 //console.log(prompt)
                 //console.log("setting prompt")
                 setPrompt("There are no campaigns that fit this criteria")(
@@ -95,7 +95,7 @@ export default function Home() {
                 }
               );
               if (response.data.length == 0) {
-                console.log("no data here!")
+                console.log("no data here!");
                 //console.log(prompt)
                 //console.log("setting prompt")
                 setPrompt("There are no campaigns that fit this criteria")(
@@ -125,7 +125,7 @@ export default function Home() {
                 }
               );
               if (response.data.length == 0) {
-                console.log("no data here!")
+                console.log("no data here!");
                 //console.log(prompt)
                 //console.log("setting prompt")
                 setPrompt("There are no campaigns that fit this criteria")(
@@ -150,7 +150,7 @@ export default function Home() {
 const PaymentForm = (props) => (
   <bs.Container>
     <bs.Row className='justify-content-center'>
-      <bs.Card style={{ padding: "3rem", height: "20rem" }}>
+      <bs.Card style={{ padding: "3rem", height: "34rem" }}>
         <Form>
           <bs.Row className='justify-content-center'>
             {/* <Input title='title' name='title' type='text' />
@@ -167,7 +167,7 @@ const PaymentForm = (props) => (
             </Field>
           </bs.Row>
           <bs.Container
-            style={{ color: "#ff0000", position: "absolute", left: "18px", width: "14rem" }}>
+            style={{ color: "#ff0000", position: "absolute", left: "20px", width: "14rem" }}>
             {props.prompt}
           </bs.Container>
           <bs.Row className='justify-content-center' style={{ paddingTop: "2rem" }}>
@@ -191,6 +191,14 @@ const PaymentForm = (props) => (
               )}
               Submit
             </bs.Button>
+            <bs.Container className='font-weight-bold'>
+              <br />
+              <p>Fraud Risk Level:</p>
+              <p style={{ color: "#83AC25" }}>1: Low</p>
+              <p style={{ color: "#23B4B1" }}>2: Medium-low</p>
+              <p style={{ color: "#D8AA01" }}>3: Medium-high</p>
+              <p style={{ color: "#B92100 " }}>4: High</p>
+            </bs.Container>
           </bs.Row>
 
           {/* form inputs */}
