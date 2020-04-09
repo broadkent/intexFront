@@ -4,16 +4,22 @@ import CampaignCard from "./campaign-card";
 import AppContext from "./context";
 import Search from "./search";
 import Axios from 'axios'
+// import { BrowserRouter as Redirect } from "react-router-dom";
+// import { useHistory, Link } from "react-router-dom";
 
 let page = 0
 function Campaigns(props) {
   const context = React.useContext(AppContext);
+  // const [prompt, setPrompt] = React.useState("False");
+  
+  
+  
   console.log('page',context)
   useEffect(async()=>{
     console.log('useeffect')
     let resp=''
     const token = "JWT " + localStorage.getItem("accessToken");
-    
+   
     resp = await Axios.get('http://127.0.0.1:8000/api/campaign/'+0,{ headers: {
       Authorization: token,
     }})
@@ -32,14 +38,35 @@ function Campaigns(props) {
       }})
     }else if(context.search=='title'){
       console.log('title')
-      resp = await Axios.get(
-        "http://127.0.0.1:8000/api/searchwordcampaigns/" + context.searchBox + "/" + context.page,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      try{
+        resp = await Axios.get(
+          "http://127.0.0.1:8000/api/searchwordcampaigns/" + context.searchBox + "/" + context.page,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+
+        ) 
+        console.log(resp.data)
+        console.log(resp.data.length)
+        //console.log(resp.data[0].pk)
+        if (resp.data.length == 0) {
+        //   // console.log(resp.data.length)
+          console.log("no data")
+          
+        //   // console.log(prompt)
+        //   // console.log("setting prompt")
+         
+        //   // // console.log(prompt)
+          // history.push("/login")
+          // (<Redirect to={{ pathname: '/prediction'}} />)
+          
+        };
+      } catch (err) {
+        console.log(err)
+      }
+      
     }else if(context.search =="description"){
       resp = await Axios.get(
         "http://127.0.0.1:8000/api/SearchCampaignDesc/" + context.searchBox + "/" + context.page,
@@ -79,11 +106,16 @@ function Campaigns(props) {
     prods[c.pk] =c.fields
   }
   if (Object.keys(prods).length ==0) {
+    console.log("redirecting...")
+    // (<Redirect to={{ pathname: '/login'}} />)
     return (
-      // <h2>Error: Campaign not found.</h2>
+    
+    //   // <h2>Error: Campaign not found.</h2>
       <bs.Spinner animation='border' role='status'>
         <span className='sr-only'>Loading...</span>
       </bs.Spinner>
+    //   // history.push("/campaigns")
+    //   // <Redirect to={{ pathname: '/login'}} />
     );
   } else {
   return (
@@ -92,6 +124,9 @@ function Campaigns(props) {
         className='justify-content-center lato font-weight-bolder dropshadow-white'
         style={{ display: "flex", padding: "2rem", color: "#83AC25", fontSize: "50pt" }}>
         campaigns
+      </bs.Row>
+      <bs.Row>
+        {props.prompt}
       </bs.Row>
       <bs.Row
         style={{ display: "flex", flexDirection: "row" }}
@@ -115,6 +150,7 @@ function Campaigns(props) {
               <bs.Button
                 onClick={() =>GetMoreItems()}
                 block
+                
                 className='m-4 rounded-pill font-weight-bold'
                 style={{
                   backgroundColor: "#FFFFFF	",
@@ -126,7 +162,7 @@ function Campaigns(props) {
                   boxShadow: "3px 3px 0px #999999",
                 }}
                 size='md'>
-                MORE
+                MORE 
               </bs.Button>
             </bs.Row>
           </bs.Col>
