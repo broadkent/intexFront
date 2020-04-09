@@ -53,21 +53,41 @@ const CalculatorController = (props) => {
           campaign_hearts: values.hearts,
           is_charity: values.charity,
         };
+<<<<<<< HEAD
+        const api_header = {
+          headers: {
+            Authorization:
+              "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTkxNTgzNjU1LCJqdGkiOiJhYmQ4MjQyMmEzZTg0MDA3YmY4ZDU5NGQ3OTE5ZDA2MyIsInVzZXJfaWQiOjd9.VM1YhF_NTju0VfhyC1v-fMp1LCA96BlMJ_zdOhfRMw8",
+          },
+        };
+
+        console.log("data: " + data);
+        
+=======
+>>>>>>> c2d11ceffe49e816691f704bef1f3c518c461441
 
         // const token = "JWT " + localStorage.getItem("accessToken");
         await axios.post("http://localhost:8000/api/prediction/", data).then(
           (response) => {
             const score = parseFloat(response.data);
             if (score === 0) {
-              setDonationsAmnt("$0");
+              setDonationsAmnt("less than $15");
+            } else if (score <= .5) {
+              setDonationsAmnt("$15-$80");
             } else if (score <= 1) {
-              setDonationsAmnt("$1-$130");
+              setDonationsAmnt("$81-$130");
+            } else if (score <= 1.5) {
+              setDonationsAmnt("$131-$383");
             } else if (score <= 2) {
-              setDonationsAmnt("$131-$635");
+              setDonationsAmnt("$384 - $636");
+            }else if (score <= 2.33) {
+              setDonationsAmnt("$637-$1536");
+            } else if (score <= 2.66) {
+              setDonationsAmnt("$1537-$2432");
             } else if (score <= 3) {
-              setDonationsAmnt("$636-$3332");
+              setDonationsAmnt("$2433-$3330");
             } else if (score <= 4) {
-              setDonationsAmnt("over $3332");
+              setDonationsAmnt("over $3330");
             }
           },
           (error) => {

@@ -3,9 +3,11 @@ import * as bs from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import axios from "axios";
 import AppContext from "./context";
+import { BrowserRouter as Redirect } from "react-router-dom";
 
 export default function Home() {
   const context = React.useContext(AppContext);
+  const [prompt, setPrompt] = React.useState("");
   return (
     <bs.Container>
       <Formik
@@ -32,7 +34,18 @@ export default function Home() {
                     Authorization: token,
                   },
                 }
-              );
+              )
+              console.log(response.data)
+              console.log(response.data.length)
+              if (response.data.length == 0) {
+                //console.log("no data here!")
+                //console.log(prompt)
+                //console.log("setting prompt")
+                setPrompt("There are no campaigns that fit this criteria.")
+                //console.log(prompt)
+                (<Redirect to={{ pathname: '/campaigns'}} />)
+                
+              };
               console.log('response3da3',response)
               context.changeSearch(values.searchBy)
               context.changeSearchBox(values.searchBox)
@@ -48,6 +61,15 @@ export default function Home() {
                   },
                 }
               );
+              if (response.data.length == 0) {
+                //console.log("no data here!")
+                //console.log(prompt)
+                //console.log("setting prompt")
+                setPrompt("There are no campaigns that fit this criteria")
+                //console.log(prompt)
+                (<Redirect to={{ pathname: '/campaigns'}} />)
+                
+              }
               console.log('response3da3',response)
               context.changeSearch(values.searchBy)
               context.changeSearchBox(values.searchBox)
@@ -64,6 +86,15 @@ export default function Home() {
                   },
                 }
               );
+              if (response.data.length == 0) {
+                //console.log("no data here!")
+                //console.log(prompt)
+                //console.log("setting prompt")
+                setPrompt("There are no campaigns that fit this criteria")
+                //console.log(prompt)
+                (<Redirect to={{ pathname: '/campaigns'}} />)
+                
+              }
               context.changeSearch(values.searchBy)
               context.changeSearchBox(values.searchBox)
               context.changeCampaigns(response.data)
@@ -84,6 +115,15 @@ export default function Home() {
                   },
                 }
               );
+              if (response.data.length == 0) {
+                //console.log("no data here!")
+                //console.log(prompt)
+                //console.log("setting prompt")
+                setPrompt("There are no campaigns that fit this criteria")
+                //console.log(prompt)
+                (<Redirect to={{ pathname: '/campaigns'}} />)
+                
+              }
               context.changeSearch(values.searchBy)
               context.changeSearchBox(riskNum)
               context.changeCampaigns(response.data)
@@ -92,7 +132,7 @@ export default function Home() {
             actions.setFieldError("title", err);
           }
         }}>
-        {(form) => <PaymentForm form={form} />}
+        {(form) => <PaymentForm form={form} prompt={prompt}/>}
       </Formik>
     </bs.Container>
   );
@@ -101,7 +141,7 @@ export default function Home() {
 const PaymentForm = (props) => (
   <bs.Container>
     <bs.Row className='justify-content-center'>
-      <bs.Card style={{ padding: "3rem", height: "19rem" }}>
+      <bs.Card style={{ padding: "3rem", height: "30rem" }}>
         <Form>
           <bs.Row className='justify-content-center'>
             {/* <Input title='title' name='title' type='text' />
@@ -110,7 +150,8 @@ const PaymentForm = (props) => (
             <Input title='risk' name='risk' type='text' /> */}
             <Input title='Search:' name='searchBox' type='text' />
             <Field title='Search By:' as='select' name='searchBy' style={{ width: "12rem" }}>
-              <option value='title'>Title</option>
+              <option  >Choose a Filter</option>
+              <option value='title' >Title</option>
               <option value='description'>Description</option>
               <option value='campaignId'>Campaign ID</option>
               <option value='risk'>Fraud Risk Level</option>
@@ -137,6 +178,10 @@ const PaymentForm = (props) => (
               )}
               Submit
             </bs.Button>
+            
+          </bs.Row>
+          <bs.Row style={{color: "#ff0000"}}> 
+           {props.prompt }
           </bs.Row>
 
           {/* form inputs */}
