@@ -190,6 +190,22 @@ function Campaigns(props) {
               </bs.Row>
               <bs.Row className='justify-content-end'>
                 <bs.Button
+                  onClick={() => PageBack()}
+                  block
+                  className='m-4 rounded-pill font-weight-bold'
+                  style={{
+                    backgroundColor: "#FFFFFF	",
+                    borderColor: "#83AC25",
+                    borderWidth: "4pt",
+                    width: "10rem",
+                    height: "3rem",
+                    color: "#83AC25",
+                    boxShadow: "3px 3px 0px #999999",
+                  }}
+                  size='md'>
+                  Back
+                </bs.Button>
+                <bs.Button
                   onClick={() => GetMoreItems()}
                   block
                   className='m-4 rounded-pill font-weight-bold'
@@ -203,7 +219,7 @@ function Campaigns(props) {
                     boxShadow: "3px 3px 0px #999999",
                   }}
                   size='md'>
-                  MORE
+                  More
                 </bs.Button>
               </bs.Row>
             </bs.Col>
