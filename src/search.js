@@ -70,7 +70,7 @@ export default function Home() {
                 }
               );
               if (response.data.length == 0) {
-                //console.log("no data here!")
+                console.log("no data here!")
                 //console.log(prompt)
                 //console.log("setting prompt")
                 setPrompt("There are no campaigns that fit this criteria")(
@@ -95,7 +95,7 @@ export default function Home() {
                 }
               );
               if (response.data.length == 0) {
-                //console.log("no data here!")
+                console.log("no data here!")
                 //console.log(prompt)
                 //console.log("setting prompt")
                 setPrompt("There are no campaigns that fit this criteria")(
@@ -125,7 +125,7 @@ export default function Home() {
                 }
               );
               if (response.data.length == 0) {
-                //console.log("no data here!")
+                console.log("no data here!")
                 //console.log(prompt)
                 //console.log("setting prompt")
                 setPrompt("There are no campaigns that fit this criteria")(
