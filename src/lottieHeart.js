@@ -1,6 +1,5 @@
 import React from "react";
 import Lottie from "react-lottie";
-import * as animationData from "./LottieJSONs/logo_animated.json";
 import * as heartData from "./LottieJSONs/heart.json";
 import { Container } from "react-bootstrap";
 

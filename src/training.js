@@ -1,9 +1,5 @@
 import React from "react";
 import * as bs from "react-bootstrap";
-import CampaignCard from "./campaign-card";
-import { useRouteMatch } from "react-router-dom";
-import AppContext from "./context";
-import { Formik, Form, Field } from "formik";
 
 function Training(props) {
   return (
@@ -18,8 +14,9 @@ function Training(props) {
         noGutters
         className='flex-grow-0 flex-shrink-0'>
         <bs.Col className='d-flex justify-content-center'>
-          <bs.Card style={{ padding: "2rem"}} className="mb-4" border='light'>
+          <bs.Card style={{ padding: "2rem" }} className='mb-4' border='light'>
             <iframe
+              title='training video'
               width='1024'
               height='576'
               src='https://www.youtube.com/embed/XhD1F6_fRLc'
