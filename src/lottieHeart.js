@@ -13,9 +13,6 @@ export default class LottieHeart extends React.Component {
       loop: false,
       autoplay: true,
       animationData: heartData.default,
-      rendererSettings: {
-        preserveAspectRatio: "xMidYmid slice",
-      },
     };
     return (
       <Container>
