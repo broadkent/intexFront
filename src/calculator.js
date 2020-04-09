@@ -60,7 +60,7 @@ const CalculatorController = (props) => {
             const score = parseFloat(response.data);
             if (score === 0) {
               setDonationsAmnt("less than $15");
-            } else if (score <= .5) {
+            } else if (score <= 0.5) {
               setDonationsAmnt("$15-$80");
             } else if (score <= 1) {
               setDonationsAmnt("$81-$130");
@@ -68,7 +68,7 @@ const CalculatorController = (props) => {
               setDonationsAmnt("$131-$383");
             } else if (score <= 2) {
               setDonationsAmnt("$384 - $636");
-            }else if (score <= 2.33) {
+            } else if (score <= 2.33) {
               setDonationsAmnt("$637-$1536");
             } else if (score <= 2.66) {
               setDonationsAmnt("$1537-$2432");
