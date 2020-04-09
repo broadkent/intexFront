@@ -27,34 +27,42 @@ export default function Home() {
           try {
             if (values.searchBy === "title") {
               var token = "JWT " + localStorage.getItem("accessToken");
+              setPrompt("");
               const response = await axios.get(
-                "http://127.0.0.1:8000/api/searchwordcampaigns/" + values.searchBox + "/" + context.page,
+                "http://127.0.0.1:8000/api/searchwordcampaigns/" +
+                  values.searchBox +
+                  "/" +
+                  context.page,
                 {
                   headers: {
                     Authorization: token,
                   },
                 }
-              )
-              console.log(response.data)
-              console.log(response.data.length)
+              );
+              console.log(response.data);
+              console.log(response.data.length);
               if (response.data.length == 0) {
                 //console.log("no data here!")
                 //console.log(prompt)
                 //console.log("setting prompt")
-                setPrompt("There are no campaigns that fit this criteria.")
-                //console.log(prompt)
-                (<Redirect to={{ pathname: '/campaigns'}} />)
-                
-              };
-              console.log('response3da3',response)
-              context.changeSearch(values.searchBy)
-              context.changeSearchBox(values.searchBox)
-              context.changeCampaigns(response.data)
+                setPrompt("There are no campaigns that fit this criteria.")(
+                  //console.log(prompt)
+                  <Redirect to={{ pathname: "/campaigns" }} />
+                );
+              }
+              console.log("response3da3", response);
+              context.changeSearch(values.searchBy);
+              context.changeSearchBox(values.searchBox);
+              context.changeCampaigns(response.data);
             }
             if (values.searchBy === "description") {
               var token = "JWT " + localStorage.getItem("accessToken");
+              setPrompt("");
               const response = await axios.get(
-                "http://127.0.0.1:8000/api/SearchCampaignDesc/" + values.searchBox + "/" + context.page,
+                "http://127.0.0.1:8000/api/SearchCampaignDesc/" +
+                  values.searchBox +
+                  "/" +
+                  context.page,
                 {
                   headers: {
                     Authorization: token,
@@ -65,18 +73,18 @@ export default function Home() {
                 console.log("no data here!")
                 //console.log(prompt)
                 //console.log("setting prompt")
-                setPrompt("There are no campaigns that fit this criteria")
-                //console.log(prompt)
-                (<Redirect to={{ pathname: '/campaigns'}} />)
-                
+                setPrompt("There are no campaigns that fit this criteria")(
+                  //console.log(prompt)
+                  <Redirect to={{ pathname: "/campaigns" }} />
+                );
               }
-              console.log('response3da3',response)
-              context.changeSearch(values.searchBy)
-              context.changeSearchBox(values.searchBox)
-              context.changeCampaigns(response.data)
-            
+              console.log("response3da3", response);
+              context.changeSearch(values.searchBy);
+              context.changeSearchBox(values.searchBox);
+              context.changeCampaigns(response.data);
             }
             if (values.searchBy === "campaignId") {
+              setPrompt("");
               const token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
                 "http://127.0.0.1:8000/api/searchcampaigns/" + values.searchBox,
@@ -90,14 +98,14 @@ export default function Home() {
                 console.log("no data here!")
                 //console.log(prompt)
                 //console.log("setting prompt")
-                setPrompt("There are no campaigns that fit this criteria")
-                //console.log(prompt)
-                (<Redirect to={{ pathname: '/campaigns'}} />)
-                
+                setPrompt("There are no campaigns that fit this criteria")(
+                  //console.log(prompt)
+                  <Redirect to={{ pathname: "/campaigns" }} />
+                );
               }
-              context.changeSearch(values.searchBy)
-              context.changeSearchBox(values.searchBox)
-              context.changeCampaigns(response.data)
+              context.changeSearch(values.searchBy);
+              context.changeSearchBox(values.searchBox);
+              context.changeCampaigns(response.data);
             }
             if (
               values.searchBy === "risk" &&
@@ -107,6 +115,7 @@ export default function Home() {
               //!check the risk level
               let riskNum = parseInt(values.searchBox);
               var token = "JWT " + localStorage.getItem("accessToken");
+              setPrompt("");
               const response = await axios.get(
                 "http://127.0.0.1:8000/api/sortRisk/" + riskNum + "/" + context.page,
                 {
@@ -119,20 +128,20 @@ export default function Home() {
                 console.log("no data here!")
                 //console.log(prompt)
                 //console.log("setting prompt")
-                setPrompt("There are no campaigns that fit this criteria")
-                //console.log(prompt)
-                (<Redirect to={{ pathname: '/campaigns'}} />)
-                
+                setPrompt("There are no campaigns that fit this criteria")(
+                  //console.log(prompt)
+                  <Redirect to={{ pathname: "/campaigns" }} />
+                );
               }
-              context.changeSearch(values.searchBy)
-              context.changeSearchBox(riskNum)
-              context.changeCampaigns(response.data)
+              context.changeSearch(values.searchBy);
+              context.changeSearchBox(riskNum);
+              context.changeCampaigns(response.data);
             }
           } catch (err) {
             actions.setFieldError("title", err);
           }
         }}>
-        {(form) => <PaymentForm form={form} prompt={prompt}/>}
+        {(form) => <PaymentForm form={form} prompt={prompt} />}
       </Formik>
     </bs.Container>
   );
@@ -141,7 +150,7 @@ export default function Home() {
 const PaymentForm = (props) => (
   <bs.Container>
     <bs.Row className='justify-content-center'>
-      <bs.Card style={{ padding: "3rem", height: "30rem" }}>
+      <bs.Card style={{ padding: "3rem", height: "20rem" }}>
         <Form>
           <bs.Row className='justify-content-center'>
             {/* <Input title='title' name='title' type='text' />
@@ -150,13 +159,17 @@ const PaymentForm = (props) => (
             <Input title='risk' name='risk' type='text' /> */}
             <Input title='Search:' name='searchBox' type='text' />
             <Field title='Search By:' as='select' name='searchBy' style={{ width: "12rem" }}>
-              <option  >Choose a Filter</option>
-              <option value='title' >Title</option>
+              <option>Choose a Filter</option>
+              <option value='title'>Title</option>
               <option value='description'>Description</option>
               <option value='campaignId'>Campaign ID</option>
               <option value='risk'>Fraud Risk Level</option>
             </Field>
           </bs.Row>
+          <bs.Container
+            style={{ color: "#ff0000", position: "absolute", left: "18px", width: "14rem" }}>
+            {props.prompt}
+          </bs.Container>
           <bs.Row className='justify-content-center' style={{ paddingTop: "2rem" }}>
             <bs.Button
               block
@@ -178,10 +191,6 @@ const PaymentForm = (props) => (
               )}
               Submit
             </bs.Button>
-            
-          </bs.Row>
-          <bs.Row style={{color: "#ff0000"}}> 
-           {props.prompt }
           </bs.Row>
 
           {/* form inputs */}
