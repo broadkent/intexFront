@@ -1,6 +1,6 @@
-import React from "react";
+import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import "./App.css";
 //import all the components
 import TopContainer from "./top-container";
@@ -11,6 +11,38 @@ import CampaignDetail from "./campaign-detail";
 import Campaigns from "./campaigns";
 import Training from "./training";
 import Login from "./login";
+import decode from 'jwt-decode'
+
+const checkAuth = () => {
+  const token = "JWT" + localStorage.getItem('accessToken')
+  const refreshToken = localStorage.getItem('refreshToken')
+  if (!token || !refreshToken){
+    return false
+  }
+  try {
+    const { exp } = decode(refreshToken)
+    console.log(exp * 1000)
+    console.log(new Date().getTime())
+    if (exp * 1000 < new Date().getTime()) {
+      return false;
+    }
+  }catch(error){
+    return false;
+  }
+  console.log("good")
+  return true;
+}
+
+const AuthRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+    checkAuth() ? (
+      <Component {...props} />
+    ) : (
+      <Redirect to={{ pathname: '/login'}} />
+    )
+  )} />
+)
+
 
 function App() {
   return (
@@ -24,15 +56,15 @@ function App() {
         <Row noGutters className='flex-grow-1'>
           <Col md='12' style={{ backgroundColor: "#F3F3F3" }}>
             <Switch>
+             
               <Route path='/campaigns/:campaignID'>
                 <CampaignDetail />
               </Route>
-              <Route path='/calculator'>
+              <AuthRoute path='/calculator'>
+                
                 <Calculator />
-              </Route>
-              <Route path='/campaigns'>
-                <Campaigns />
-              </Route>
+              </AuthRoute>
+              <AuthRoute exact path="/campaigns" component={Campaigns}/>
               <Route path='/training'>
                 <Training />
               </Route>
@@ -42,6 +74,7 @@ function App() {
               <Route path='/'>
                 <Home />
               </Route>
+             
             </Switch>
           </Col>
         </Row>
