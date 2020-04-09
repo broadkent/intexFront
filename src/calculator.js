@@ -53,18 +53,6 @@ const CalculatorController = (props) => {
           campaign_hearts: values.hearts,
           is_charity: values.charity,
         };
-<<<<<<< HEAD
-        const api_header = {
-          headers: {
-            Authorization:
-              "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTkxNTgzNjU1LCJqdGkiOiJhYmQ4MjQyMmEzZTg0MDA3YmY4ZDU5NGQ3OTE5ZDA2MyIsInVzZXJfaWQiOjd9.VM1YhF_NTju0VfhyC1v-fMp1LCA96BlMJ_zdOhfRMw8",
-          },
-        };
-
-        console.log("data: " + data);
-        
-=======
->>>>>>> c2d11ceffe49e816691f704bef1f3c518c461441
 
         // const token = "JWT " + localStorage.getItem("accessToken");
         await axios.post("http://localhost:8000/api/prediction/", data).then(
