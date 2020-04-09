@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Container, Table, Row, Col, Button, Spinner, Nav, Card, Image } from "react-bootstrap";
-import { useParams, useHistory } from "react-router-dom";
-import AppContext from "./context";
-import axios from "axios";
+
+import React, { useEffect  } from 'react'
+import { Container, Table, Row, Col, Spinner, Nav, Card, Image } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+// import AppContext from "./context";
+import axios from 'axios'
+
 
 export default function CampaignDetail() {
-  const context = React.useContext(AppContext);
-  const history = useHistory();
+  // const context = React.useContext(AppContext);
+  // const history = useHistory();
 
   let { campaignID } = useParams();
   let [campaignObjects, setcampaigns] = React.useState({});
@@ -22,22 +24,24 @@ export default function CampaignDetail() {
       prods[c.pk] = c.fields;
     }
 
-    setcampaigns(prods);
-  }, []);
+    setcampaigns(prods)  
+  },[campaignID])
 
   let campaignObject = campaignObjects;
   if (Object.keys(campaignObject).length == 0) {
+
     return (
-      // <h2>Error: Campaign not found.</h2>
       <Spinner animation='border' role='status'>
         <span className='sr-only'>Loading...</span>
       </Spinner>
     );
+
   } else {
     let campaign = undefined;
     Object.values(campaignObjects).map((c) => {
       campaign = c;
     });
+
 
     return (
       <Container>
@@ -57,6 +61,7 @@ export default function CampaignDetail() {
             <i className='fas fa-arrow-left p-1'></i>
             Back to Campaigns
           </Nav.Link>
+
         </Row>
 
         {/* Uncomment when axios is connected */}
