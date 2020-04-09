@@ -155,12 +155,76 @@ function Campaigns(props) {
     console.log("redirecting...");
     // (<Redirect to={{ pathname: '/login'}} />)
     return (
-      //   // <h2>Error: Campaign not found.</h2>
-      <bs.Spinner animation='border' role='status'>
-        <span className='sr-only'>Loading...</span>
-      </bs.Spinner>
-      //   // history.push("/campaigns")
-      //   // <Redirect to={{ pathname: '/login'}} />
+    
+      <bs.Container>
+      <bs.Row
+        className='justify-content-center lato font-weight-bolder dropshadow-white'
+        style={{ display: "flex", padding: "2rem", color: "#83AC25", fontSize: "50pt" }}>
+        campaigns
+      </bs.Row>
+      <bs.Row>
+        {props.prompt}
+      </bs.Row>
+      <bs.Row
+        style={{ display: "flex", flexDirection: "row" }}
+        noGutters
+        className='flex-grow-0 flex-shrink-0'>
+        <bs.Col md={3} className='d-flex'>
+          <Search />
+        </bs.Col>
+        <bs.Col className='d-flex'>
+          <bs.Col>
+            <bs.Row>
+              <bs.Container>
+                {/* <CampaignCard /> */}
+                {Object.values(prods).map((campaign, campaignID) =>{ 
+                  
+                  return (<CampaignCard key={campaignID} campaign={campaign} />)
+                })} 
+              </bs.Container>
+            </bs.Row>
+            <bs.Row >
+              <h4><center>No more campaigns to show</center></h4>
+              {/* <bs.Button
+                onClick={() =>GetMoreItems()}
+                block
+                
+                className='m-4 rounded-pill font-weight-bold'
+                style={{
+                  backgroundColor: "#FFFFFF	",
+                  borderColor: "#83AC25",
+                  borderWidth: "4pt",
+                  width: "10rem",
+                  height: "3rem",
+                  color: "#83AC25",
+                  boxShadow: "3px 3px 0px #999999",
+                }}
+                size='md'>
+                MORE 
+              </bs.Button> */}
+            </bs.Row>
+            <bs.Row>
+              <bs.Button
+                  onClick={() => PageBack()}
+                  block
+                  className='m-4 rounded-pill font-weight-bold'
+                  style={{
+                    backgroundColor: "#FFFFFF	",
+                    borderColor: "#83AC25",
+                    borderWidth: "4pt",
+                    width: "10rem",
+                    height: "3rem",
+                    color: "#83AC25",
+                    boxShadow: "3px 3px 0px #999999",
+                  }}
+                  size='md'>
+                  Back
+                </bs.Button>
+            </bs.Row>
+          </bs.Col>
+        </bs.Col>
+      </bs.Row>
+    </bs.Container>
     );
   } else {
     return (
