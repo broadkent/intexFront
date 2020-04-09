@@ -23,7 +23,7 @@ export default function Home() {
         onSubmit={async (values, actions) => {
           console.log("insubmit");
           try {
-            if (values.searchBy == "title") {
+            if (values.searchBy === "title") {
               console.log("title search");
               var token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
@@ -36,7 +36,7 @@ export default function Home() {
               );
               console.log("response", response.data);
             }
-            if (values.searchBy == "description") {
+            if (values.searchBy === "description") {
               console.log("description search");
               var token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
@@ -49,7 +49,7 @@ export default function Home() {
               );
               console.log("response", response.data);
             }
-            if (values.searchBy == "campaignId") {
+            if (values.searchBy === "campaignId") {
               console.log("id search");
               var token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
@@ -63,7 +63,7 @@ export default function Home() {
               console.log("response", response.data);
             }
             if (
-              values.searchBy == "risk" &&
+              values.searchBy === "risk" &&
               parseInt(values.searchBox) > 0 &&
               parseInt(values.searchBox) < 5
             ) {

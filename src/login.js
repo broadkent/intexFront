@@ -8,7 +8,6 @@ import { useHistory } from "react-router-dom";
 import LottieLock from "./lottieLock";
 
 export default function Home() {
-  
   let history = useHistory();
   return (
     <Container>
@@ -39,7 +38,7 @@ export default function Home() {
             console.log("submit", response.data);
             localStorage.setItem("accessToken", response.data.access);
             localStorage.setItem("refreshToken", response.data.refresh);
-            history.push('/campaigns')
+            history.push("/campaigns");
           } catch (err) {
             const err1 = err.toString();
             if (err1.search("401")) {
@@ -71,7 +70,7 @@ const PaymentForm = (props) => (
             <bs.Col>
               <bs.Card.Body>
                 <Input title='Username' name='username' type='text' />
-                <Input title='Password:' name='password' type='text' />
+                <Input title='Password:' name='password' type='password' />
               </bs.Card.Body>
             </bs.Col>
           </bs.Row>
