@@ -1,5 +1,5 @@
 import React, { useState, useEffect  } from 'react'
-import { Container, Table, Row, Col, Button, Spinner } from "react-bootstrap";
+import { Container, Table, Row, Col, Button, Spinner, Nav } from "react-bootstrap";
 import { useParams, useHistory } from "react-router-dom";
 import AppContext from "./context";
 import axios from 'axios'
@@ -44,18 +44,16 @@ export default function CampaignDetail() {
     <Container fluid className='p-4'>
       <Row className='pb-4'>
         <Col md='3'>
-          <Button
+          <Nav.Link
             style={{
               backgroundColor: "#83AC25",
               borderColor: "#83AC25",
             }}
-            className='rounded-pill'
-            onClick={(e) => {
-              history.push("/campaigns");
-            }}>
+            href={"/campaigns"}
+            className='rounded-pill'>
             <i className='fas fa-arrow-left p-1'></i>
             Back to Campaigns
-          </Button>
+          </Nav.Link>
         </Col>
       </Row>
 
