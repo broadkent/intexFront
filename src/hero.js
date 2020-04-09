@@ -11,7 +11,6 @@ export default function Hero() {
       <div className='d-flex'>
         <Link
           to={"./campaigns"}
-          block
           className='btn btn-light m-4 rounded-pill  align-content-center'
           style={{
             backgroundColor: "#83AC25",
@@ -28,7 +27,6 @@ export default function Hero() {
         </Link>
         <Link
           to={"./training"}
-          block
           className='btn btn-light m-4 rounded-pill  align-content-center font-weight-bold'
           style={{
             backgroundColor: "#FFFFFF	",
@@ -45,7 +43,6 @@ export default function Hero() {
         </Link>
         <Link
           to={"./calculator"}
-          block
           className='btn btn-light m-4 rounded-pill  align-content-center'
           style={{
             backgroundColor: "#83AC25",
