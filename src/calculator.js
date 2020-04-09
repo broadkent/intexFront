@@ -54,15 +54,10 @@ const CalculatorController = (props) => {
           campaign_hearts: values.hearts,
           is_charity: values.charity,
         };
-        const api_header = {
-          headers: {
-            Authorization:
-              "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTg2MzkyOTY4LCJqdGkiOiJmNjMzNjAxMTgxNzY0Zjc3YWRkNTc2NDU2MWNkMzVmMSIsInVzZXJfaWQiOjN9.L5PY-AozyJOSHyUD38x8rMnxKsrW74C00YwoazGTfi0",
-          },
-        };
+        
 
-
-        await axios.post("http://localhost:8000/api/prediction/", data, api_header).then(
+        const token = "JWT " + localStorage.getItem("accessToken");
+        await axios.post("http://localhost:8000/api/prediction/", data).then(
           (response) => {
 
             const score = parseFloat(response.data);
@@ -85,7 +80,7 @@ const CalculatorController = (props) => {
 
         //DONATORS
 
-        await axios.post("http://localhost:8000/api/predictiondonators/", data, api_header).then(
+        await axios.post("http://localhost:8000/api/predictiondonators/", data).then(
           (response) => {
             setDonators(parseInt(response.data));
           },

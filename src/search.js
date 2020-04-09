@@ -2,8 +2,10 @@ import React from "react";
 import * as bs from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import axios from "axios";
+import AppContext from "./context";
 
 export default function Home() {
+  const context = React.useContext(AppContext);
   return (
     <bs.Container>
       <Formik
@@ -24,27 +26,36 @@ export default function Home() {
             if (values.searchBy === "title") {
               var token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
-                "http://127.0.0.1:8000/api/searchwordcampaigns/" + values.searchBox + "/" + 0,
+                "http://127.0.0.1:8000/api/searchwordcampaigns/" + values.searchBox + "/" + context.page,
                 {
                   headers: {
                     Authorization: token,
                   },
                 }
               );
+              console.log('response3da3',response)
+              context.changeSearch(values.searchBy)
+              context.changeSearchBox(values.searchBox)
+              context.changeCampaigns(response.data)
             }
             if (values.searchBy === "description") {
               var token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
-                "http://127.0.0.1:8000/api/SearchCampaignDesc/" + values.searchBox + "/" + 0,
+                "http://127.0.0.1:8000/api/SearchCampaignDesc/" + values.searchBox + "/" + context.page,
                 {
                   headers: {
                     Authorization: token,
                   },
                 }
               );
+              console.log('response3da3',response)
+              context.changeSearch(values.searchBy)
+              context.changeSearchBox(values.searchBox)
+              context.changeCampaigns(response.data)
+            
             }
             if (values.searchBy === "campaignId") {
-              var token = "JWT " + localStorage.getItem("accessToken");
+              const token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
                 "http://127.0.0.1:8000/api/searchcampaigns/" + values.searchBox,
                 {
@@ -53,6 +64,9 @@ export default function Home() {
                   },
                 }
               );
+              context.changeSearch(values.searchBy)
+              context.changeSearchBox(values.searchBox)
+              context.changeCampaigns(response.data)
             }
             if (
               values.searchBy === "risk" &&
@@ -63,13 +77,16 @@ export default function Home() {
               let riskNum = parseInt(values.searchBox);
               var token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
-                "http://127.0.0.1:8000/api/sortRisk/" + riskNum + "/" + 0,
+                "http://127.0.0.1:8000/api/sortRisk/" + riskNum + "/" + context.page,
                 {
                   headers: {
                     Authorization: token,
                   },
                 }
               );
+              context.changeSearch(values.searchBy)
+              context.changeSearchBox(riskNum)
+              context.changeCampaigns(response.data)
             }
           } catch (err) {
             actions.setFieldError("title", err);
