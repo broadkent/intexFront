@@ -56,7 +56,7 @@ const CalculatorController = (props) => {
         };
         
 
-        const token = "JWT " + localStorage.getItem("accessToken");
+        // const token = "JWT " + localStorage.getItem("accessToken");
         await axios.post("http://localhost:8000/api/prediction/", data).then(
           (response) => {
 
