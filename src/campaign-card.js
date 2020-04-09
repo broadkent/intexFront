@@ -61,7 +61,7 @@ function CampaignCard(props) {
             </bs.Row>
             <bs.Row>
               <bs.Col style={{ fontSize: "25px", position: "absolute", bottom: "-2px" }}>
-                <p>Fraud Level: [INSERT]</p>
+                <p>Fraud Level: {props.campaign.riskScoreQuartile}</p>
               </bs.Col>
               <bs.Col className='justify-content-end'>
                 <Nav.Link
