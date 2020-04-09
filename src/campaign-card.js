@@ -34,7 +34,7 @@ function CampaignCard(props) {
                   <p>Days Active: {props.campaign.days_active}</p>
                   <p>Total: ${props.campaign.current_amount}</p>
                   <p>Goal: ${props.campaign.goal}</p>
-                  <p>Fraud Level: {props.campaign.riskScoreQuartile}</p>
+                  <p>Fraud Risk Level: {props.campaign.riskScoreQuartile}</p>
                 </div>
               </bs.Col>
               <bs.Col className='justify-content-end'>
