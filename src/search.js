@@ -107,11 +107,7 @@ export default function Home() {
               context.changeSearchBox(values.searchBox);
               context.changeCampaigns(response.data);
             }
-            if (
-              values.searchBy === "risk" &&
-              parseInt(values.searchBox) > 0 &&
-              parseInt(values.searchBox) < 5
-            ) {
+            if (values.searchBy === "risk") {
               //!check the risk level
               let riskNum = parseInt(values.searchBox);
               var token = "JWT " + localStorage.getItem("accessToken");
