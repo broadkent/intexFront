@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import * as bs from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import axios from "axios";
+import LottieLock from "./lottieLock";
 
 export default function Home() {
   return (
@@ -58,12 +59,7 @@ const PaymentForm = (props) => (
     </bs.Row>
     <bs.Row className='justify-content-center'>
       <bs.Card style={{ padding: "3rem" }}>
-        <p style={{ color: "#83AC25" }} className='font-weight-bold'>
-          Credentials are given by admins of the gofundme website.{" "}
-        </p>
-        <p style={{ color: "#83AC25" }} className='font-weight-bold'>
-          Only on special basis may others have credentials.
-        </p>
+        <LottieLock />
         <Form>
           <bs.Row>
             <bs.Col>
@@ -73,7 +69,7 @@ const PaymentForm = (props) => (
               </bs.Card.Body>
             </bs.Col>
           </bs.Row>
-          <bs.Row className='justify-content-center'>
+          <bs.Row className='justify-content-center' style={{ paddingTop: "5px" }}>
             <bs.Button
               block
               className='m-4 rounded-pill font-weight-bold'
@@ -95,6 +91,13 @@ const PaymentForm = (props) => (
               Submit
             </bs.Button>
           </bs.Row>
+          <br />
+          <p style={{ color: "#83AC25", fontSize: "10pt" }} className='font-weight-bold'>
+            Credentials are given by admins of the gofundme website.
+          </p>
+          <p style={{ color: "#83AC25", fontSize: "10pt" }} className='font-weight-bold'>
+            Only on special basis may others have credentials.
+          </p>
 
           {/* form inputs */}
         </Form>
