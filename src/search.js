@@ -24,7 +24,7 @@ export default function Home() {
           console.log("insubmit");
           try {
             if (values.searchBy == "title") {
-              console.log("white");
+              console.log("title search");
               var token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
                 "http://127.0.0.1:8000/api/searchwordcampaigns/" + values.searchBox + "/" + 0,
@@ -37,7 +37,7 @@ export default function Home() {
               console.log("response", response.data);
             }
             if (values.searchBy == "description") {
-              console.log("whites");
+              console.log("description search");
               var token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
                 "http://127.0.0.1:8000/api/SearchCampaignDesc/" + values.searchBox + "/" + 0,
@@ -50,7 +50,7 @@ export default function Home() {
               console.log("response", response.data);
             }
             if (values.searchBy == "campaignId") {
-              console.log("white");
+              console.log("id search");
               var token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
                 "http://127.0.0.1:8000/api/searchcampaigns/" + values.searchBox,
@@ -68,7 +68,7 @@ export default function Home() {
               parseInt(values.searchBox) < 5
             ) {
               //!check the risk level
-              console.log("white");
+              console.log("risk search");
               let riskNum = parseInt(values.searchBox);
               var token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
