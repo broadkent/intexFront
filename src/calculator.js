@@ -2,6 +2,8 @@ import React from "react";
 import * as bs from "react-bootstrap";
 import { Formik, Form, Field, Label } from "formik";
 import axios from "axios";
+import LottiePerson from "./lottiePerson";
+import LottieDollar from "./lottieDollar";
 // import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 // import { loadStripe } from '@stripe/stripe-js';
 
@@ -56,7 +58,7 @@ const CalculatorController = (props) => {
         const api_header = {
           headers: {
             Authorization:
-              "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTg2Mzg4MjQzLCJqdGkiOiJjZTE2YTE1ZWJkZTE0Yjc4YWU1YWU3ZTljZjIwYjYyYSIsInVzZXJfaWQiOjN9.gwt9_gcvVs1bbeh0Na5Ck429f_4LwcUcgkHicKwKi1Y",
+              "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTg2MzkyOTY4LCJqdGkiOiJmNjMzNjAxMTgxNzY0Zjc3YWRkNTc2NDU2MWNkMzVmMSIsInVzZXJfaWQiOjN9.L5PY-AozyJOSHyUD38x8rMnxKsrW74C00YwoazGTfi0",
           },
         };
 
@@ -210,7 +212,7 @@ const PaymentForm = (props) => (
       prediction calculator
     </bs.Row>
     <bs.Row className='justify-content-center'>
-      <bs.Card style={{ width: "50rem", padding: "2rem" }}>
+      <bs.Card style={{ width: "50rem", padding: "2rem", paddingBottom: "7rem" }}>
         <bs.Card.Body>
           <Form>
             <bs.Row>
@@ -296,7 +298,7 @@ const PaymentForm = (props) => (
                     boxShadow: "3px 3px 0px #999999",
                     position: "absolute",
                     left: "75px",
-                    bottom: "-50px",
+                    bottom: "-95px",
                   }}
                   size='md'
                   disabled={props.form.isSubmitting}>
@@ -307,8 +309,18 @@ const PaymentForm = (props) => (
                 </bs.Button>
               </bs.Col>
               <bs.Col className='align-self-center font-weight-bold' style={{ fontSize: "15pt" }}>
-                Raised: {props.donations} <br />
-                Donors: {props.donators}
+                <bs.Container style={{ position: "absolute", right: "80px", bottom: "10" }}>
+                  <LottieDollar />
+                </bs.Container>
+                <bs.Container style={{ position: "absolute", right: "-150px", bottom: "-40px" }}>
+                  {props.donations} <br />
+                </bs.Container>
+                <bs.Container style={{ position: "absolute", right: "80px", bottom: "-100px" }}>
+                  <LottiePerson />
+                </bs.Container>
+                <bs.Container style={{ position: "absolute", right: "-150px", bottom: "-90px" }}>
+                  {props.donators}
+                </bs.Container>
               </bs.Col>
             </bs.Row>
             <bs.Row></bs.Row>
