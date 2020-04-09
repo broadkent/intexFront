@@ -2,20 +2,19 @@ import React from "react";
 import * as bs from "react-bootstrap";
 import CampaignCard from "./campaign-card";
 import AppContext from "./context";
-import Search from './search';
+import Search from "./search";
 function Campaigns(props) {
   const context = React.useContext(AppContext);
-  const campaignObjects = context.campaigns
+  const campaignObjects = context.campaigns;
   // console.log('campaignObjects', campaignObjects)
 
   if (!campaignObjects) {
     return (
       // <h2>Error: Campaign not found.</h2>
-      <bs.Spinner animation="border" role="status">
-        <span className="sr-only">Loading...</span>
+      <bs.Spinner animation='border' role='status'>
+        <span className='sr-only'>Loading...</span>
       </bs.Spinner>
-
-    )
+    );
   }
 
   return (
@@ -30,9 +29,7 @@ function Campaigns(props) {
         noGutters
         className='flex-grow-0 flex-shrink-0'>
         <bs.Col md={3} className='d-flex'>
-          <bs.Card style={{ padding: "2rem" }}>
-            <Search></Search>
-          </bs.Card>
+          <Search />
         </bs.Col>
         <bs.Col className='d-flex'>
           <bs.Col>
@@ -40,7 +37,7 @@ function Campaigns(props) {
               <bs.Container>
                 {/* <CampaignCard /> */}
                 {campaignObjects.map((campaign, campaignID) => (
-                  <CampaignCard key={campaignID} campaign={campaign}/>
+                  <CampaignCard key={campaignID} campaign={campaign} />
                 ))}
               </bs.Container>
             </bs.Row>
