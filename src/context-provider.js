@@ -54,7 +54,7 @@ export default class AppProvider extends React.Component {
   pageback = (s) => {
     this.setState((state) =>
       produce(state, (draft) => {
-        if (s > 10) {
+        if (draft.page > 10) {
           draft.page -= s;
         } else {
           draft.page = 0;
