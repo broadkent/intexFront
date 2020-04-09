@@ -21,15 +21,14 @@ const checkAuth = () => {
   }
   try {
     const { exp } = decode(refreshToken)
-    console.log(exp * 1000)
-    console.log(new Date().getTime())
+
     if (exp * 1000 < new Date().getTime()) {
       return false;
     }
   }catch(error){
     return false;
   }
-  console.log("good")
+
   return true;
 }
 

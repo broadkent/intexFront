@@ -41,11 +41,10 @@ const CalculatorController = (props) => {
       validateOnBlur={false}
       validate={(values) => {
         const errors = {};
-        console.log("validating", values);
+
         return errors;
       }}
       onSubmit={async (values, actions) => {
-        console.log("submit", values);
 
         let data = {
           goal: values.goal,
@@ -63,11 +62,11 @@ const CalculatorController = (props) => {
         };
 
         console.log("data: " + data);
+        
 
-        await axios.post("http://localhost:8000/api/prediction/", data, api_header).then(
+        const token = "JWT " + localStorage.getItem("accessToken");
+        await axios.post("http://localhost:8000/api/prediction/", data).then(
           (response) => {
-            console.log(response);
-            console.log(response.data);
 
             const score = parseFloat(response.data);
             if (score === 0) {
@@ -97,10 +96,8 @@ const CalculatorController = (props) => {
 
         //DONATORS
 
-        await axios.post("http://localhost:8000/api/predictiondonators/", data, api_header).then(
+        await axios.post("http://localhost:8000/api/predictiondonators/", data).then(
           (response) => {
-            console.log(response);
-            console.log(response.data);
             setDonators(parseInt(response.data));
           },
           (error) => {

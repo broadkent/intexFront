@@ -3,7 +3,7 @@ import * as bs from "react-bootstrap";
 import { Link } from "react-router-dom";
 import LottieHeart from "./lottieHeart";
 import LottieShare from "./lottieShare";
-
+import { Nav } from "react-bootstrap";
 function CampaignCard(props) {
 
   if (!props.campaign) {
@@ -23,19 +23,19 @@ function CampaignCard(props) {
         <bs.Row style={{ display: "flex", flexDirection: "row" }}>
           <bs.Card.Img
             // src={require("./testimage.png")}
-            src={props.campaign.fields.campaign_image_url}
+            src={props.campaign.campaign_image_url}
             style={{ width: "15rem", height: "15rem", padding: "2rem" }}
           />
           <bs.Col>
             <bs.Row>
               <bs.Col md={7} style={{ padding: "1rem" }}>
                 <bs.Card.Title className='font-weight-bold' style={{ fontSize: "20pt" }}>
-                  {props.campaign.fields.title}
+                  {props.campaign.title}
                 </bs.Card.Title>
                 <div style={{ fontSize: "14pt" }}>
-                  <p>Days Active: {props.campaign.fields.days_active}</p>
-                  <p>Total: ${props.campaign.fields.current_amount}</p>
-                  <p>Goal: ${props.campaign.fields.goal}</p>
+                  <p>Days Active: {props.campaign.days_active}</p>
+                  <p>Total: ${props.campaign.current_amount}</p>
+                  <p>Goal: ${props.campaign.goal}</p>
                 </div>
               </bs.Col>
               <bs.Col className='justify-content-end'>
@@ -46,13 +46,13 @@ function CampaignCard(props) {
                   <bs.Col style={{ position: "absolute", left: "130px", fontSize: "18px" }}>
                     {" "}
                     <br />
-                    {props.campaign.fields.campaign_hearts}
+                    {props.campaign.campaign_hearts}
                   </bs.Col>
                 </bs.Row>
                 <bs.Row className='align-content-center'>
                   <bs.Col style={{ position: "absolute", left: "130px", fontSize: "18px" }}>
                     <br />
-                    {props.campaign.fields.social_share_total}
+                    {props.campaign.social_share_total}
                   </bs.Col>
                   <bs.Col>
                     <LottieShare />
@@ -65,8 +65,8 @@ function CampaignCard(props) {
                 <p>Fraud Level: [INSERT]</p>
               </bs.Col>
               <bs.Col className='justify-content-end'>
-                <Link
-                  to={"/campaigns/" + props.campaign.fields.campaign_id}
+                <Nav.Link
+                  href={"/campaigns/" + props.campaign.campaign_id}
                   className='btn btn-light absolute-center m-4 rounded-pill font-weight-bold'
                   style={{
                     backgroundColor: "#83AC25",
@@ -83,7 +83,7 @@ function CampaignCard(props) {
                   }}
                   size='lg'>
                   DETAILS
-                </Link>
+                </Nav.Link>
               </bs.Col>
             </bs.Row>
           </bs.Col>

@@ -1,22 +1,91 @@
-import React from "react";
+import React, { useState, useEffect  } from 'react'
 import * as bs from "react-bootstrap";
 import CampaignCard from "./campaign-card";
 import AppContext from "./context";
 import Search from "./search";
+import Axios from 'axios'
+
+let page = 0
 function Campaigns(props) {
   const context = React.useContext(AppContext);
-  const campaignObjects = context.campaigns;
-  // console.log('campaignObjects', campaignObjects)
-
-  if (!campaignObjects) {
+  console.log('page',context)
+  useEffect(async()=>{
+    console.log('useeffect')
+    let resp=''
+    const token = "JWT " + localStorage.getItem("accessToken");
+    
+    resp = await Axios.get('http://127.0.0.1:8000/api/campaign/'+0,{ headers: {
+      Authorization: token,
+    }})
+    
+    context.changeCampaigns(resp.data)
+    
+  },[])
+  const GetMoreItems = async ()=>{
+    context.changepage(25)
+    let resp
+    const token = "JWT " + localStorage.getItem("accessToken");
+    if(context.search=='default'){
+      console.log('default',context.page)
+      resp = await Axios.get('http://127.0.0.1:8000/api/campaign/'+context.page,{ headers: {
+        Authorization: token,
+      }})
+    }else if(context.search=='title'){
+      console.log('title')
+      resp = await Axios.get(
+        "http://127.0.0.1:8000/api/searchwordcampaigns/" + context.searchBox + "/" + context.page,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+    }else if(context.search =="description"){
+      resp = await Axios.get(
+        "http://127.0.0.1:8000/api/SearchCampaignDesc/" + context.searchBox + "/" + context.page,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+    }else if(context.search =='risk'){
+      resp = await Axios.get(
+        "http://127.0.0.1:8000/api/sortRisk/" + context.searchBox + "/" + context.page,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+        );
+    }else if(context.search=='campaignId'){
+      resp = await Axios.get(
+        "http://127.0.0.1:8000/api/searchcampaigns/" + context.searchBox,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+    }else{
+      console.log('made it to the end')
+    }
+    console.log('resp111',resp)
+    context.changeCampaigns(resp.data)
+  }
+  const resp = context.campaigns
+  const prods ={}
+  for ( const c of resp){
+    prods[c.pk] =c.fields
+  }
+  if (Object.keys(prods).length ==0) {
     return (
       // <h2>Error: Campaign not found.</h2>
       <bs.Spinner animation='border' role='status'>
         <span className='sr-only'>Loading...</span>
       </bs.Spinner>
     );
-  }
-
+  } else {
   return (
     <bs.Container>
       <bs.Row
@@ -36,13 +105,15 @@ function Campaigns(props) {
             <bs.Row>
               <bs.Container>
                 {/* <CampaignCard /> */}
-                {campaignObjects.map((campaign, campaignID) => (
-                  <CampaignCard key={campaignID} campaign={campaign} />
-                ))}
+                {Object.values(prods).map((campaign, campaignID) =>{ 
+                  
+                  return (<CampaignCard key={campaignID} campaign={campaign} />)
+                })} 
               </bs.Container>
             </bs.Row>
             <bs.Row className='justify-content-end'>
               <bs.Button
+                onClick={() =>GetMoreItems()}
                 block
                 className='m-4 rounded-pill font-weight-bold'
                 style={{
@@ -63,5 +134,6 @@ function Campaigns(props) {
       </bs.Row>
     </bs.Container>
   );
+  }
 }
 export default Campaigns;

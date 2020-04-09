@@ -1,7 +1,7 @@
 import React from 'react'
-import axios from 'axios'
 import AppContext from './context'
 import App from './App'
+import {produce} from 'immer'
 
 /** The context provider for our app */
 export default class AppProvider extends React.Component {
@@ -9,27 +9,48 @@ export default class AppProvider extends React.Component {
     constructor(props) {
         super(props)
         this.actions = {
+            changeCampaigns: this.changeCampaigns,
+            changeSearch: this.changeSearch,
+            changepage:this.changepage,
+            changeSearchBox:this.changeSearchBox
         }
         this.state = {
-            campaigns: [],
+            campaigns: '',
+            search:'default',
+            page:0,
+            searchBox:'default'
         }
     }
-
+    changeCampaigns = (variable) => {
+        this.setState(state=>produce(state,draft=>{
+            
+            draft.campaigns = variable
+        }))
+    }
+    changeSearchBox = (variable) => {
+        this.setState(state=>produce(state,draft=>{
+            draft.page = 0
+            draft.searchBox = variable
+        }))
+    }
+    changeSearch = (variable) => {
+        this.setState(state=>produce(state,draft=>{
+            draft.page = 0
+            draft.search = variable
+        }))
+    }
+    changepage = (s) => {
+        this.setState(state=>produce(state,draft=>{
+            draft.page += s
+           
+        }))
+    }
     render() {
         return (
             <AppContext.Provider value={{...this.state, ...this.actions}}>
                 <App />
             </AppContext.Provider>
         )
-    }
-
-    async componentDidMount() {
-        const resp = await axios.get('http://localhost:8000/api/campaign/')
-        console.log(resp.data)
-
-        this.setState({
-            campaigns: resp.data,
-        })
     }
 
 }

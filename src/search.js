@@ -2,8 +2,10 @@ import React from "react";
 import * as bs from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import axios from "axios";
+import AppContext from "./context";
 
 export default function Home() {
+  const context = React.useContext(AppContext);
   return (
     <bs.Container>
       <Formik
@@ -17,41 +19,43 @@ export default function Home() {
         validateOnBlur={false}
         validate={(values) => {
           const errors = {};
-          console.log("validating", values);
           return errors;
         }}
         onSubmit={async (values, actions) => {
-          console.log("insubmit");
           try {
-            if (values.searchBy == "title") {
-              console.log("title search");
+            if (values.searchBy === "title") {
               var token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
-                "http://127.0.0.1:8000/api/searchwordcampaigns/" + values.searchBox + "/" + 0,
+                "http://127.0.0.1:8000/api/searchwordcampaigns/" + values.searchBox + "/" + context.page,
                 {
                   headers: {
                     Authorization: token,
                   },
                 }
               );
-              console.log("response", response.data);
+              console.log('response3da3',response)
+              context.changeSearch(values.searchBy)
+              context.changeSearchBox(values.searchBox)
+              context.changeCampaigns(response.data)
             }
-            if (values.searchBy == "description") {
-              console.log("description search");
+            if (values.searchBy === "description") {
               var token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
-                "http://127.0.0.1:8000/api/SearchCampaignDesc/" + values.searchBox + "/" + 0,
+                "http://127.0.0.1:8000/api/SearchCampaignDesc/" + values.searchBox + "/" + context.page,
                 {
                   headers: {
                     Authorization: token,
                   },
                 }
               );
-              console.log("response", response.data);
+              console.log('response3da3',response)
+              context.changeSearch(values.searchBy)
+              context.changeSearchBox(values.searchBox)
+              context.changeCampaigns(response.data)
+            
             }
-            if (values.searchBy == "campaignId") {
-              console.log("id search");
-              var token = "JWT " + localStorage.getItem("accessToken");
+            if (values.searchBy === "campaignId") {
+              const token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
                 "http://127.0.0.1:8000/api/searchcampaigns/" + values.searchBox,
                 {
@@ -60,26 +64,29 @@ export default function Home() {
                   },
                 }
               );
-              console.log("response", response.data);
+              context.changeSearch(values.searchBy)
+              context.changeSearchBox(values.searchBox)
+              context.changeCampaigns(response.data)
             }
             if (
-              values.searchBy == "risk" &&
+              values.searchBy === "risk" &&
               parseInt(values.searchBox) > 0 &&
               parseInt(values.searchBox) < 5
             ) {
               //!check the risk level
-              console.log("risk search");
               let riskNum = parseInt(values.searchBox);
               var token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
-                "http://127.0.0.1:8000/api/sortRisk/" + riskNum + "/" + 0,
+                "http://127.0.0.1:8000/api/sortRisk/" + riskNum + "/" + context.page,
                 {
                   headers: {
                     Authorization: token,
                   },
                 }
               );
-              console.log("response", response.data);
+              context.changeSearch(values.searchBy)
+              context.changeSearchBox(riskNum)
+              context.changeCampaigns(response.data)
             }
           } catch (err) {
             actions.setFieldError("title", err);
