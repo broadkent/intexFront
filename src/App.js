@@ -1,8 +1,8 @@
+///////// APP.JS ///////////
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import "./App.css";
-//import all the components
 import TopContainer from "./top-container";
 import FooterContainer from "./footer-container";
 import Home from "./home";
@@ -12,26 +12,21 @@ import Campaigns from "./campaigns";
 import Training from "./training";
 import Login from "./login";
 import decode from 'jwt-decode'
-
 const checkAuth = () => {
-  const token = "JWT" + localStorage.getItem('accessToken')
-  const refreshToken = localStorage.getItem('refreshToken')
-  if (!token || !refreshToken){
+  const token_plain = localStorage.getItem('accessToken')
+  if (!token_plain){
     return false
   }
   try {
-    const { exp } = decode(refreshToken)
-
+    const { exp } = decode(token_plain)
     if (exp * 1000 < new Date().getTime()) {
       return false;
     }
   }catch(error){
     return false;
   }
-
   return true;
 }
-
 const AuthRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
     checkAuth() ? (
@@ -41,8 +36,6 @@ const AuthRoute = ({ component: Component, ...rest }) => (
     )
   )} />
 )
-
-
 function App() {
   return (
     <Router>
@@ -55,12 +48,10 @@ function App() {
         <Row noGutters className='flex-grow-1'>
           <Col md='12' style={{ backgroundColor: "#F3F3F3" }}>
             <Switch>
-             
               <Route path='/campaigns/:campaignID'>
                 <CampaignDetail />
               </Route>
               <AuthRoute path='/calculator'>
-                
                 <Calculator />
               </AuthRoute>
               <AuthRoute exact path="/campaigns" component={Campaigns}/>
@@ -73,7 +64,6 @@ function App() {
               <Route path='/'>
                 <Home />
               </Route>
-             
             </Switch>
           </Col>
         </Row>
@@ -86,5 +76,4 @@ function App() {
     </Router>
   );
 }
-
 export default App;

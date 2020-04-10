@@ -4,44 +4,37 @@ import { Formik, Form, Field } from "formik";
 import axios from "axios";
 import LottiePerson from "./lottiePerson";
 import LottieDollar from "./lottieDollar";
-// import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-// import { loadStripe } from '@stripe/stripe-js';
-
-// const stripePromise = loadStripe(...)
-
 function Calculator(props) {
-  // we'll add Stripe's Elements component here later
   return <CalculatorController />;
 }
 export default Calculator;
-
 const CalculatorController = (props) => {
   const total = 50.0; // context.getCartTotal()
   const [donations_amnt, setDonationsAmnt] = React.useState("");
   const [donators, setDonators] = React.useState("");
-
-  // Days Active
-  // T/F has beneficiary
-  // T/F creator is a charity
-  // number of hearts
-  // T/F visible in search
-  // Goal $ to raise
-
   return (
     <Formik
       initialValues={{
-        // daysActive: "90",
+        daysActive: "0",
         beneficiary: "True",
         charity: "True",
-        // hearts: "15",
+        hearts: "0",
         visibleSearch: "True",
-        // goal: "1000",
+        goal: "0",
       }}
       validateOnChange={false}
       validateOnBlur={false}
       validate={(values) => {
         const errors = {};
-
+        if (!values.daysActive.match(/^[0-9]+$/)) {
+          errors.daysActive = 'Enter a number';
+        }
+        if (!values.hearts.match(/^[0-9]+$/)) {
+          errors.hearts = 'Enter a number';
+        }
+        if (!values.goal.match(/^[0-9]+$/)) {
+          errors.goal = 'Enter a number';
+        }
         return errors;
       }}
       onSubmit={async (values, actions) => {
@@ -53,11 +46,13 @@ const CalculatorController = (props) => {
           campaign_hearts: values.hearts,
           is_charity: values.charity,
         };
-
-        // const token = "JWT " + localStorage.getItem("accessToken");
-        await axios.post("http://localhost:8000/api/prediction/", data).then(
+        await axios.post("/api/prediction/", data).then(
           (response) => {
             const score = parseFloat(response.data);
+            if (values.daysActive == 0){
+              setDonationsAmnt("less than $15");
+              setDonators("0")
+            }
             if (score === 0) {
               setDonationsAmnt("less than $15");
             } else if (score <= 0.5) {
@@ -82,104 +77,20 @@ const CalculatorController = (props) => {
             console.log(error);
           }
         );
-
         //DONATORS
-
-        await axios.post("http://localhost:8000/api/predictiondonators/", data).then(
+        await axios.post("/api/predictiondonators/", data).then(
           (response) => {
-            setDonators(parseInt(response.data));
+            if (values.daysActive == 0){
+              setDonators("0")
+            }
+            else{
+              setDonators(parseInt(response.data));
+            }
           },
           (error) => {
             console.log(error);
           }
         );
-
-        //Pause
-        // setScore(null)
-        // await new Promise(resolve => {
-        //     setTimeout(() => {  // wait 2 seconds, then set the form as "not submitting"
-        //         resolve()
-        //     }, 2000)
-        // })
-        // console.log('after the 2 seconds')
-
-        // const api_headers = {
-        //   Authorization:
-        //     "Bearer zY5Oie1v2gd8x7JUU+6t+eD06SSGIu3cSGLqJykxAKnI3fmvx3oTVwT9h8T9dGYZ5mqwfu/LswXXYCt3E1QKUQ==",
-        //   "Content-Type": "application/json",
-        // };
-        // let data = {
-        //   // "goal": values.goal,
-        //   // "days_active": values.daysActive,
-        //   // "has_beneficiary": values.beneficiary,
-        //   // "visible_in_search": values.visibleSearch,
-        //   // "campaign_hearts": values.hearts,
-        //   // "is_charity": values.charity,
-
-        //   Inputs: {
-        //     input1: {
-        //       ColumnNames: [
-        //         "goal",
-        //         "days_active",
-        //         "has_beneficiary",
-        //         "visible_in_search",
-        //         "campaign_hearts",
-        //         "is_charity",
-        //       ],
-        //       Values: [
-        //         [
-        //           values.goal,
-        //           values.daysActive,
-        //           values.beneficiary,
-        //           values.visibleSearch,
-        //           values.hearts,
-        //           values.charity,
-        //         ],
-        //       ],
-        //     },
-        //   },
-        //   GlobalParameters: {},
-        // };
-        // // setScore(null)
-        // // await new Promise(resolve => {
-        // //     setTimeout(() => {  // wait 2 seconds, then set the form as "not submitting"
-        // //         resolve()
-        // //     }, 2000)
-        // // })
-        // // console.log('after the 2 seconds')
-        // console.log(data);
-        // console.log(api_headers);
-        // await axios
-        //   .post("http://localhost:8000/api/prediction/", {
-        //     goal: values.goal,
-        //     days_active: values.daysActive,
-        //     has_beneficiary: values.beneficiary,
-        //     visible_in_search: values.visibleSearch,
-        //     campaign_hearts: values.hearts,
-        //     is_charity: values.charity,
-        //   })
-        //   .then(
-        //     (response) => {
-        //       console.log(response);
-        //       console.log(response.data);
-
-        //       const score = parseFloat(response.data);
-        //       if (score === 0) {
-        //         setScore("Your campaign will raise $0");
-        //       } else if (score <= 1) {
-        //         setScore("Your campaign will raise $1-$130");
-        //       } else if (score <= 2) {
-        //         setScore("Your campaign will raise $131-$635");
-        //       } else if (score <= 3) {
-        //         setScore("Your campaign will raise $636-$3332");
-        //       } else if (score <= 4) {
-        //         setScore("Your campaign will raise over $3332");
-        //       }
-        //     },
-        //     (error) => {
-        //       console.log(error);
-        //     }
-        //   );
       }}>
       {(form) => (
         <PaymentForm form={form} total={total} donators={donators} donations={donations_amnt} />
@@ -187,11 +98,9 @@ const CalculatorController = (props) => {
     </Formik>
   );
 };
-
 /**
  * The form layout/html
  */
-
 // Days Active
 // T/F has beneficiary
 // T/F creator is a charity
@@ -208,29 +117,24 @@ const PaymentForm = (props) => (
     <bs.Row className='justify-content-center'>
       <bs.Card style={{ width: "50rem", padding: "2rem", paddingBottom: "7rem" }}>
         <bs.Card.Body>
+          <h6><strong>Fill out the form with your GoFundMe campaign characteristics.</strong></h6>
+          <p>This prediction calculator is backed by powerful algorithms designed by GoFundMe data scientists.
+          The calculator will help you determine what changes you need to make to reach your campaign goals.
+          After processing your information, you will see the projected donation amount and number of donators
+        in the bottom right corner.</p>
+          <br />
           <Form>
             <bs.Row>
               <bs.Col>
                 <Input title='Days Active:' name='daysActive' type='text' />
                 <Input title='Number of hearts:' name='hearts' type='text' />
                 <Input title='Goal $ to raise:' name='goal' type='text' />
-                {/* <Input
-                  title='Campaign has declared beneficiary (true/false):'
-                  name='beneficiary'
-                  type='text'
-                /> */}
-                {/* <Input
-                  title='Campaign creator is a charity (true/false):'
-                  name='charity'
-                  type='text'
-                /> */}
               </bs.Col>
               <bs.Col>
                 <br />
                 <label htmlFor='charity' style={{ fontSize: "15pt" }}>
                   Creator is a charity:
                 </label>
-
                 <Field
                   as='select'
                   name='charity'
@@ -238,14 +142,12 @@ const PaymentForm = (props) => (
                   <option value='true'>True</option>
                   <option value='false'>False</option>
                 </Field>
-
                 <br />
                 <br />
                 <br />
                 <label htmlFor='beneficiary' style={{ fontSize: "15pt" }}>
                   Has declared beneficiary:
                 </label>
-
                 <Field
                   as='select'
                   name='beneficiary'
@@ -253,14 +155,12 @@ const PaymentForm = (props) => (
                   <option value='true'>True</option>
                   <option value='false'>False</option>
                 </Field>
-
                 <br />
                 <br />
                 <br />
                 <label htmlFor='visibleSearch' style={{ fontSize: "15pt" }}>
                   Visible in search results:
                 </label>
-
                 <Field
                   as='select'
                   name='visibleSearch'
@@ -268,12 +168,6 @@ const PaymentForm = (props) => (
                   <option value='true'>True</option>
                   <option value='false'>False</option>
                 </Field>
-
-                {/* <Input
-                  title='Campaign is visible in search results (true/false):'
-                  name='visibleSearch'
-                  type='text'
-                /> */}
               </bs.Col>
             </bs.Row>
             <bs.Row className='justify-content-center'>
@@ -318,10 +212,22 @@ const PaymentForm = (props) => (
               </bs.Col>
             </bs.Row>
             <bs.Row></bs.Row>
-            {/* form inputs */}
           </Form>
         </bs.Card.Body>
       </bs.Card>
+    </bs.Row>
+    <bs.Row className='pt-4 px-5 justify-content-center'>
+      <strong><h5 >Form Descriptions</h5></strong>
+    </bs.Row>
+    <bs.Row className='px-5 justify-content-center'>
+      <ul>
+        <li><strong>Days active:</strong> Number of days your campaign is open for</li>
+        <li><strong>Number of hearts:</strong> Number of  "likes" your campaign has gotten</li>
+        <li><strong>Goal $ to raise:</strong> The donation goal that is publicly visible on your campaign</li>
+        <li><strong>Creator is a charity:</strong> Is the campaign in behalf of a charity?</li>
+        <li><strong>Has declared beneficiary:</strong> Does the campaign declare a beneficiary?</li>
+        <li><strong>Visible in search results:</strong> Is the campaign set to be seen publicly?</li>
+      </ul>
     </bs.Row>
     <bs.Row className='justify-content-center' style={{ paddingTop: "2rem" }}>
       <bs.Nav.Link
@@ -342,7 +248,6 @@ const PaymentForm = (props) => (
     </bs.Row>
   </bs.Container>
 );
-
 /**
  * A form input.
  *   props.title - the title that shows above the input box
@@ -363,15 +268,7 @@ const Input = (props) => (
   </Field>
 );
 
-// import React from 'react'
-// import { Container, Row, Col } from 'react-bootstrap'
-// import Hero from './hero'
 
-// export default function Calculator() {
-//     return(
-//         <Container fluid className='p-4'>
-//             <h1>Prediction Calculator</h1>
-//             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-//         </Container>
-//     )
-// }
+
+
+

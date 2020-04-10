@@ -2,8 +2,6 @@ import React from "react";
 import AppContext from "./context";
 import App from "./App";
 import { produce } from "immer";
-
-/** The context provider for our app */
 export default class AppProvider extends React.Component {
   constructor(props) {
     super(props);

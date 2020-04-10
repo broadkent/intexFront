@@ -1,20 +1,14 @@
-
+/////////// CAMPAIGN DETAIL ////////////
 import React, { useEffect  } from 'react'
 import { Container, Table, Row, Col, Spinner, Nav, Card, Image } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-// import AppContext from "./context";
 import axios from 'axios'
-
-
 export default function CampaignDetail() {
-  // const context = React.useContext(AppContext);
-  // const history = useHistory();
-
   let { campaignID } = useParams();
   let [campaignObjects, setcampaigns] = React.useState({});
   useEffect(async () => {
     var token = "JWT " + localStorage.getItem("accessToken");
-    const resp = await axios.get("http://127.0.0.1:8000/api/searchcampaigns/" + campaignID, {
+    const resp = await axios.get("/api/searchcampaigns/" + campaignID, {
       headers: {
         Authorization: token,
       },
@@ -23,47 +17,20 @@ export default function CampaignDetail() {
     for (const c of resp.data) {
       prods[c.pk] = c.fields;
     }
-
     setcampaigns(prods)  
   },[campaignID])
-
-    // useEffect(() => {
-  //   async function hello() {
-  //     var token = "JWT " + localStorage.getItem("accessToken");
-  //     const resp = await axios.get("http://127.0.0.1:8000/api/searchcampaigns/" + campaignID,{ headers: {
-  //     Authorization: token,
-  //   }})
-  //   const prods = {}
-  //   for ( const c of resp.data){
-  //       prods[c.pk] =c.fields
-  //   }
-  //   setcampaigns(prods)  
-  // }},[])
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     // You can await here
-  //     const response = await MyAPI.getData(someId);
-  //     // ...
-  //   }
-  //   fetchData();
-  // }, [someId]); // Or [] if effect doesn't need props or state
-
   let campaignObject = campaignObjects;
   if (Object.keys(campaignObject).length == 0) {
-
     return (
       <Spinner animation='border' role='status'>
         <span className='sr-only'>Loading...</span>
       </Spinner>
     );
-
   } else {
     let campaign = undefined;
     Object.values(campaignObjects).map((c) => {
       return campaign = c;
     });
-
-
     return (
       <Container>
         <Row className='justify-content-center'>
@@ -82,11 +49,7 @@ export default function CampaignDetail() {
             <i className='fas fa-arrow-left p-1'></i>
             Back to Campaigns
           </Nav.Link>
-
         </Row>
-
-        {/* Uncomment when axios is connected */}
-
         <Row className='justify-content-center'>
           <Card style={{ padding: "5rem", paddingTop: "1rem", width: "60rem" }}>
             <Row style={{ padding: "3rem" }}>
@@ -105,8 +68,6 @@ export default function CampaignDetail() {
                 </Container>
               </Col>
             </Row>
-
-            {/* Uncomment when axios is connected */}
             <Row className='justify-content-center'>
               <Table responsive>
                 <thead>

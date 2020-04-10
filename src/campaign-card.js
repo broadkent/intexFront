@@ -1,26 +1,23 @@
+//////// CAMPAIGN CARD ///////////
 import React from "react";
 import * as bs from "react-bootstrap";
 import LottieHeart from "./lottieHeart";
 import LottieShare from "./lottieShare";
 import { Nav } from "react-bootstrap";
+import { Link } from 'react-router-dom'
 function CampaignCard(props) {
   if (!props.campaign) {
     return (
-      // <h2>Error: Campaign not found.</h2>
-
       <bs.Spinner animation='border' role='status'>
         <span className='sr-only'>Loading...</span>
       </bs.Spinner>
     );
   }
-
   return (
     <bs.Card className='mb-2'>
-      {/* <bs.Card.Img variant='top' src={"/media/products/" + props.filename + "-1.png"} /> */}
       <bs.Card.Body>
         <bs.Row style={{ display: "flex", flexDirection: "row" }}>
           <bs.Card.Img
-            // src={require("./testimage.png")}
             src={props.campaign.campaign_image_url}
             style={{ width: "15rem", height: "15rem", padding: "2rem" }}
           />
@@ -61,8 +58,8 @@ function CampaignCard(props) {
             </bs.Row>
             <bs.Row>
               <bs.Col className='justify-content-end'>
-                <Nav.Link
-                  href={"/campaigns/" + props.campaign.campaign_id}
+                <Link
+                  to={"/campaigns/" + props.campaign.campaign_id + "/"}
                   className='btn btn-light absolute-center m-4 rounded-pill font-weight-bold'
                   style={{
                     backgroundColor: "#83AC25",
@@ -79,25 +76,13 @@ function CampaignCard(props) {
                   }}
                   size='lg'>
                   Details
-                </Nav.Link>
+                </Link>
               </bs.Col>
             </bs.Row>
           </bs.Col>
         </bs.Row>
-        {/* <bs.Card.Title>{props.name}</bs.Card.Title>
-        <bs.Card.Text>${props.price}</bs.Card.Text>
-        <Link
-          to={"/product/" + props.id} //! Change to proper api 
-          variant='primary'
-          className='btn btn-light'
-          style={{ position: "absolute", right: "10px", top: "10px" }}>
-          Details
-        </Link> */}
       </bs.Card.Body>
     </bs.Card>
   );
 }
-
 export default CampaignCard;
-
-//!ALL FUNCTION NAMES NEED TO BE CAPITALIZED

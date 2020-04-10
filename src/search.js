@@ -1,10 +1,10 @@
+/////// SEARCH ////////
 import React from "react";
 import * as bs from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import axios from "axios";
 import AppContext from "./context";
 import { BrowserRouter as Redirect } from "react-router-dom";
-
 export default function Home() {
   const context = React.useContext(AppContext);
   const [prompt, setPrompt] = React.useState("");
@@ -21,6 +21,17 @@ export default function Home() {
         validateOnBlur={false}
         validate={(values) => {
           const errors = {};
+          if (values.searchBy == "campaignId") {
+            if (!values.searchBox.match(/^[0-9]+$/))
+              errors.searchBox = 'Enter a number';
+          }
+          if (values.searchBy == "risk") {
+            if (!values.searchBox.match(/^[0-9]+$/))
+              errors.searchBox = 'Enter a number';
+          }
+          if (values.searchBox == undefined) {
+            errors.searchBox = 'Enter a value';
+          }
           return errors;
         }}
         onSubmit={async (values, actions) => {
@@ -29,7 +40,7 @@ export default function Home() {
               var token = "JWT " + localStorage.getItem("accessToken");
               setPrompt("");
               const response = await axios.get(
-                "http://127.0.0.1:8000/api/searchwordcampaigns/" +
+                "/api/searchwordcampaigns/" +
                   values.searchBox +
                   "/" +
                   context.page,
@@ -42,11 +53,7 @@ export default function Home() {
               console.log(response.data);
               console.log(response.data.length);
               if (response.data.length == 0) {
-                //console.log("no data here!")
-                //console.log(prompt)
-                //console.log("setting prompt")
                 setPrompt("There are no campaigns that fit this criteria.")(
-                  //console.log(prompt)
                   <Redirect to={{ pathname: "/campaigns" }} />
                 );
               }
@@ -59,7 +66,7 @@ export default function Home() {
               var token = "JWT " + localStorage.getItem("accessToken");
               setPrompt("");
               const response = await axios.get(
-                "http://127.0.0.1:8000/api/SearchCampaignDesc/" +
+                "/api/SearchCampaignDesc/" +
                   values.searchBox +
                   "/" +
                   context.page,
@@ -71,10 +78,7 @@ export default function Home() {
               );
               if (response.data.length == 0) {
                 console.log("no data here!");
-                //console.log(prompt)
-                //console.log("setting prompt")
                 setPrompt("There are no campaigns that fit this criteria")(
-                  //console.log(prompt)
                   <Redirect to={{ pathname: "/campaigns" }} />
                 );
               }
@@ -87,7 +91,7 @@ export default function Home() {
               setPrompt("");
               const token = "JWT " + localStorage.getItem("accessToken");
               const response = await axios.get(
-                "http://127.0.0.1:8000/api/searchcampaigns/" + values.searchBox,
+                "/api/searchcampaigns/" + values.searchBox,
                 {
                   headers: {
                     Authorization: token,
@@ -96,10 +100,7 @@ export default function Home() {
               );
               if (response.data.length == 0) {
                 console.log("no data here!");
-                //console.log(prompt)
-                //console.log("setting prompt")
                 setPrompt("There are no campaigns that fit this criteria")(
-                  //console.log(prompt)
                   <Redirect to={{ pathname: "/campaigns" }} />
                 );
               }
@@ -113,7 +114,7 @@ export default function Home() {
               var token = "JWT " + localStorage.getItem("accessToken");
               setPrompt("");
               const response = await axios.get(
-                "http://127.0.0.1:8000/api/sortRisk/" + riskNum + "/" + context.page,
+                "/api/sortRisk/" + riskNum + "/" + context.page,
                 {
                   headers: {
                     Authorization: token,
@@ -122,10 +123,7 @@ export default function Home() {
               );
               if (response.data.length == 0) {
                 console.log("no data here!");
-                //console.log(prompt)
-                //console.log("setting prompt")
                 setPrompt("There are no campaigns that fit this criteria")(
-                  //console.log(prompt)
                   <Redirect to={{ pathname: "/campaigns" }} />
                 );
               }
@@ -142,17 +140,12 @@ export default function Home() {
     </bs.Container>
   );
 }
-
 const PaymentForm = (props) => (
   <bs.Container>
     <bs.Row className='justify-content-center'>
       <bs.Card style={{ padding: "3rem", height: "34rem" }}>
         <Form>
           <bs.Row className='justify-content-center'>
-            {/* <Input title='title' name='title' type='text' />
-            <Input title='description' name='description' type='text' />
-            <Input title='campaignId' name='campaignId' type='text' />
-            <Input title='risk' name='risk' type='text' /> */}
             <Input title='Search:' name='searchBox' type='text' />
             <Field title='Search By:' as='select' name='searchBy' style={{ width: "12rem" }}>
               <option>Choose a Filter</option>
@@ -196,8 +189,6 @@ const PaymentForm = (props) => (
               <p style={{ color: "#B92100 " }}>4: High</p>
             </bs.Container>
           </bs.Row>
-
-          {/* form inputs */}
         </Form>
       </bs.Card>
     </bs.Row>
